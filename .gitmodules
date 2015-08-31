@@ -1,0 +1,6 @@
+[submodule "webapp"]
+	path = webapp
+	url = git@github.com:VaclavDedik/triager.git
+[submodule "classifier"]
+	path = classifier
+	url = git@github.com:VaclavDedik/classifier.git
