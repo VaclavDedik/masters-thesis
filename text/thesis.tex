@@ -6,13 +6,35 @@
  advisor={Bruno Rossi, PhD},
  title={Computer-Aided Ticket Triage},
  keywords={Bug, Machine Learning, Assignee},
- abstract={\lipsum[4]}}
+ abstract={\lipsum[4]},
+ autoLayout=false}
 \usepackage{lmodern}
 \usepackage{lipsum}
 \usepackage{todo}
+\usepackage{hyperref}
+\usepackage[
+    type={CC},
+    modifier={by},
+    version={4.0},
+]{doclicense}
 \renewcommand{\todomark}{}
 
 \begin{document}
+ \makeatletter
+  \thesis@blocks@cover
+  \thesis@blocks@titlePage
+  \thesis@blocks@frontMatter
+  \doclicenseThis
+  \thesis@blocks@assignment
+  \thesis@blocks@declaration
+  \thesis@blocks@thanks
+  \thesis@blocks@clearRight
+  \thesis@blocks@abstract
+  \thesis@blocks@keywords
+  \thesis@blocks@tables
+  \thesis@blocks@mainMatter
+ \makeatother
+
  \input{chapters/Introduction}
  \input{chapters/Related_Work}
  \input{chapters/Evaluation}
