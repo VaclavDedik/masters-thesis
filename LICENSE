@@ -1,0 +1,6 @@
+Copyright (c) 2015 Vaclav Dedik
+
+This project consists of three parts and therefore it is licensed under three separate licenses.
+You can find the license for the classifier part in the classifier directory.
+The license for the webapp part is in the webapp directory.
+And finally the license for the text part of the thesis in the text directory.
