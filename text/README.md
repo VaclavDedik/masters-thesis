@@ -1,6 +1,12 @@
 Computer-Aided Ticket Triage
 ===========
 
+Requirements
+------------
+
+ * [TeX Live 2015](https://www.tug.org/texlive/)
+ * [fithesis3](https://github.com/Witiko/fithesis3)
+
 How to Build the Thesis Text
 ----------------------------
 
