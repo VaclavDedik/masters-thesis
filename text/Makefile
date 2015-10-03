@@ -11,8 +11,5 @@ thesis-text:
 fast:
 	pdflatex --interaction=nonstopmode -synctex=1 thesis.tex
 
-start: thesis-text
-	evince thesis.pdf
-
 clean:
 	rm -rf *.{log,out,pdf,aux,tfm,600pk,514pk,fls,toc,bbl,blg,fdb_latexmk,synctex.gz,tdo}
