@@ -1,7 +1,19 @@
 \chapter{Introduction}
 
-\lipsum[1]
+The advancements in the 21st century brought many improvements in \textit{machine learning} and \textit{natural language processing} allowing us to predict and determine the correct action based solely on prior knowledge with almost no human interaction. The possible applications of these techniques are very broad ranging from medicine to transportation, engineering, research and many more. The domain of this thesis is to utilize machine learning and natural language processing algorithms in software engineering.
 
-\lipsum[2]
+With the advent of computer software in our contemporary world, it was quickly discovered that software is almost never perfect and it needs to be continuously maintained as new issues (\textit{bugs}) keep arising as long as the computer program is used. It is not unusual to discover thousands or even tens of thousands of bugs in a software application and therefore there are usually more than one developers working on these bugs trying to fix them. For convenience and to reduce the effort necessary to maintain the list of the issues, software development community came up with a web application designed specifically for keeping the track of bugs. This software is called an \textit{issue tracker} and one entry of an issue is called a \textit{bug report}. A bug report usually contains the summary, description and \textit{assignee} of the discovered bug, as well as other fields (priority, status, comments etc.). Assignee is the developer who is assigned to investigate and possibly fix the bug. The necessity of determining the assignee raises an important question -- who should fix the bug? The goal of this thesis is to find a way to answer this question in real time with the involvement of almost no human interaction.
 
-\lipsum[3]
+\section{Objectives}
+
+Primary objective of this thesis is to evaluate different machine learning models and to determine which one with what configuration is the best choice for this problem considering all its aspects. Most important aspect of all is the performance, i.e. the number of cases in which the computer-generated prediction is correct. Another important aspect is the time complexity of the model and the resources cost (hardware requirements). The existence of a great number of models with even greater number of possible configurations makes the evaluation rather complex, which is the reason why not all models in all its possible configurations are evaluated. Instead, the more logical choices determined from related works are studied.
+
+Another objective is to study related works to eventually compare our results with previous attempts. This will also allow us to determine the baseline for our own experiments and pick the best candidate models.
+
+Using machine learning and natural language processing requires some sort of dataset to be passed to the learning algorithm. In this case, we are using old bug reports from various issue trackers. One of our main goals is to analyze these datasets to estimate their relative (di)similarity as well as optimize their attributes (e.g. size, date of creation) to aid the models to achieve the best possible qualities.
+
+As we were able to retrieve data from open-source projects (accessible on the Internet) as well as from a proprietary project, our last objective is to compare open-source and proprietary data. We will focus not only on the evaluation of performance with these datasets, but also on the analysis.
+
+\section{Outline}
+
+First chapter is an introduction to the machine learning domain as wall as the problem domain of this thesis, summary of its objectives and the methodology used to fulfill them. In the second chapter, we will summarize some related works from various scientific journals. ...\todo{Describe other chapters} The XXX chapter is the core of the thesis, it includes the evaluation of the models and analysis of the datasets. The last chapter concludes this study with a summary of our findings and an outline for possible future work.
