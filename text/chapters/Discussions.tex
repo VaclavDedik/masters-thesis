@@ -1,0 +1,27 @@
+\chapter{Discussions}
+
+In this chapter, we discuss the results and compare them with related works (see \autoref{chapter:related-work}). We also address some possible threats to validity and conclude the chapter with potential future work.
+
+\section{Results}
+
+In the beginning of \autoref{chapter:evaluation}, we analyzed the three datasets that support our subsequent evaluation of the models. The distribution of the datasets seen in \autoref{section:datasets} seems to be very similar and thus it is not surprising that we fail to reject both following hypotheses. In terms of our GQM \hyperlink{question:4}{question 4}, this suggests that our model should work with all datasets without the need to tune the model's parameters. Subsequent evaluation of performance of the datasets supports this conclusion further. It is, however, possible, that some highly specific datasets would not work very well or not at all and it would therefore be necessary to adjust some of the parameters of our classifier.
+
+The distribution of the datasets in \autoref{section:datasets} and the consecutive testing of hypotheses also addresses \hyperlink{question:5}{question 5}. From this single point of view, it would seem there is almost no difference between open-source and proprietary data. In term of performance, however, there is a significant difference as can be seen in \autoref{section:comparison-of-datasets}. One possible explanation could be the size of the window that was used to select the training and testing samples of bug reports. If the window is too big, the developers that have a high number of resolved tickets but are no longer active could be considered by the model for future prediction and disadvantage the other developers that are currently active. This explanation does not seem to hold to our analysis as can be seen in \autoref{section:window-size}. As it was tested on open-source data, it is possible that the proprietary data are more sensitive to the window size. Second possible explanation could be bad quality of the proprietary data. It is, for example, possible, that the open source community pays more attention to ticket triage. Be it as it may, we can safely conclude that there is a difference between our samples of open-source and proprietary data albeit only in terms of performance.
+
+As mentioned above, we evaluate \hyperlink{question:6}{question 6} in \autoref{section:window-size}. We employed three approaches to answer this question and while there was some variations in performance with respect to the size of the window, there was not found a trend that would warrant a conclusion in one way or another with high enough confidence. Even though the results do seem to suggest that the size of the window does not significantly change the performance of the classifier, it would be necessary to do a more thorough analysis with more than three approaches on more datasets to adopt this outcome with more confidence.
+
+In \autoref{section:baseline}, we saw that our model outperforms the baseline model, which tells us that automatic ticket triage based on supervised text classification does work at least to some extent (\hyperlink{question:1}{question 1}). In the subsequent sections, we determined what model is the best in our case and what its performance is answering \hyperlink{question:2}{question 2}. We can also answered \hyperlink{question:3}{question 3} by evaluating precision and recall of the classifier. It is not very surprising that the Support Vector Machine model performs best as it was already concluded in many other works\todo{citation needed}. On the other hand, our selection of possible models is quite limited so while unlikely, it is possible that there are models that can outperform SVM on some or most of our datasets.
+
+The last part (\autoref{section:compare-number-of-recommendations}) of our evaluation addresses the question of recommending more than one assignee for one bug report (\hyperlink{question:7}{question 7}). It is possible to assign a developer to a bug report automatically without any input from the reporter (or project manager) apart from the summary and description simply by having the classifier choose the most probable candidate. This way, the user who manages tickets has to rely on the computer generated model to successfully choose the correct developer. If that is not achieved, the bug report has to be reassigned to someone else. Another way is to utilize a semi-automated approach which presents the user with a list of suggestions rather than automatically filling in the best match. The question is how many developers to show in such a list without overwhelming the user with too many choices. The best approach might be to consider the change in performance, if the performance does not change much when the number of recommendations is changed from five to ten, it might not be sensible to recommend ten developers. One the other hand, it makes sense to change the number of suggestions to five if the performance increases significantly after recommending five possible assignees rather than two.
+
+\section{Comparison with Related Works}
+
+TODO
+
+\section{Threats to Validity}
+
+TODO
+
+\section{Future Work}
+
+TODO
