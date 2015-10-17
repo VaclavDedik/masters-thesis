@@ -1,0 +1,75 @@
+\chapter{Background}
+
+Our thesis could not exist without some fundamentals that were developed by researches long time before. In this chapter, we dive into these fundamentals to get a better intuition about their theory and inner workings. First, we discuss several basic principals in Machine Learning and Text Classification including supervised vs unsupervised learning, regression vs classification and binary-class vs multi-class classification. Next, we describe some ML models like Support Vector Machine and Naive Bayes. In the last section, we detail several ML Feature Extraction methods.
+
+\section{Machine Learning and Text Classification}
+
+Machine Learning is a field of study in \textit{Artificial Intelligence} (AI) that enables programing of intelligent computer software that is able to learn from experience to improve its performance~\cite{Samuel1959}. This definition fits a very broad amount of techniques including linear and logistic regression, clustering, decision tree learning, probabilistic classification, deep learning using artificial neural networks and many more. Our thesis uses these ML techniques to achieve text classification.
+
+Text classification (or document classification) is a problem in computer science that attempts to assign documents to several categories (classes). A simple example is Spam detection where the goal is to determine whether an incoming email is an unsolicited message. Another more complex example is to classify books into several categories based on genres. Machine Learning allows us to solve this problem without some intricate user intervention.
+
+In the following text, we briefly show how basic learning algorithms work. This will allow us to understand more complicated topics essential for the next two sections. We also explore some basic ML classes relevant for this thesis.
+
+\subsection{Basic Mechanics}
+
+Generally, machine learning algorithms are based on statistical and probabilistic concepts that allow them to use some existing dataset to extrapolate a prediction for future data samples. This is very similar in nature to what mathematical statistics attempts, i.e. the goal is to get some general idea about a population based solely on a sample with limited size. An example is regression analysis where the goal is to plot a line or a function that fits the data as well as possible. This analysis allows us to predict (or estimate) an output for a sample without already having the sample in our dataset.
+
+Learning algorithms are implemented in many ways. Most of them use data from previous experience (called \textit{training data}) to optimize a \textit{cost function} based on a \textit{hypothesis function}. A cost function usually takes one or more parameters (usually represented as a vector or a matrix $\theta$) that are iteratively modified in order to achieve the lowest possible value for its output value. The cost function represents some (weighted) distance from some or all of the samples from the training dataset. It can, however, encompass more complicated functionality in order to achieve better performance. A hypothesis function is a function that is used for extrapolating predictions. An example of a cost function with a hypothesis function $h_\theta$ is shown below ($m$ is number of data samples from training dataset, $x^(i)$ is a vector representing a data sample and $y^{(i)}$ is the output value associated with this sample that we want to predict for future samples).
+
+$$J(\theta) = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2$$
+
+This cost function penalizes the hypothesis function if the function does not fit the data well. The goal is therefore to find a $\theta$ parameter that shifts the hypothesis function towards a better fit causing decrease in the cost function output value.
+
+There are other forms of learning algorithms, this however demonstrates how a general learning algorithm can be constructed. To summarize, the goal is usually very simple -- optimize a mathematical model to fit an existing dataset as well as possible. Based on the constructed mathematical model, predict the output for subsequent data samples to aid the user in their task.
+
+\subsection{Regression and Classification}
+
+Now we look at some categories by which learning algorithm can be classified. The first classification is based on the output type the learning algorithm tries to predict.
+
+Regression deals with predicting some continues value based on a data sample. An example is the prediction of the size of a tumor based on biopsy. In other words, we have some known measured features and we want to predict a value based on it that we do not know, where the value is continuous in nature. The most common learning algorithm that addresses regression is \textit{linear regression}.
+
+Classification tries to determine a class that a data sample can be labeled with. A good example is trying to predict if a tumor is malignant or benign based on biopsy. The predicted value is always discrete as there must be a finite number of classes. Most common number of classes is two (binary-class classification), but there can be many more (multi-class classification). An example of a learning algorithm that deals with classification is \textit{logistic regression}.
+
+To summarize, the difference is in the type of output value that these two methods predict. Regression predicts a single continuous value while classification divides data sample into discrete finite categories. Our thesis uses multi-class classification to achieve its goal.
+
+\subsection{Supervised and Unsupervised Learning}
+
+Another way to classify learning algorithms is by the way they are trained. The most important such categories distinguish learning algorithms into supervised and supervised classes. Less common is semi-supervised learning which is a combination of both.
+
+Supervised learning algorithms use labeled training examples to construct the inner mathematical model used for prediction. The problems these learning algorithm try to solve must have available output values for training dataset and these past output values must be as accurate as possible otherwise the performance of the learning algorithm will be low. An example of a problem that can be addressed by a supervised learning algorithm is the prediction of a digit drawn by a human hand. We can easily label all training example because we are able to recognize what digit is on each example. A common supervised learning algorithm is logistic regression.
+
+Unsupervised learning algorithms, on the contrary, do not require labeled training dataset. Instead, these algorithms try to find some pattern in the data by which to cluster them. The problems solved by these algorithms do not have known output values or the amount of possible output values is not predetermined. An example of an unsupervised problem is clustering of images into some unknown categories. An example of an unsupervised learning algorithm is k-means that tries to optimize the location of $k$ \textit{centroids} so that the total distance of all other samples to nearest centroids is as short as possible.
+
+The problem of our thesis can be solved with supervised learning as the assignees are \textit{usually} known. Sometimes, however, the assignee might not be known in which case the algorithm can be aided by an unsupervised learning algorithm, resulting in a semi-supervised approach. The lack of known assignees on past examples can be more substantial on some bug repositories with more irresponsible users, in which case a semi-supervised approach can be a benefit. We, however, focus only on supervised learning in our work.
+
+\section{Classification Models}
+
+\subsection{Naive Bayes}
+
+TODO
+
+\subsection{Decision Tree}
+
+TODO
+
+\subsection{Support Vector Machine}
+
+TODO
+
+\section{Feature Extraction Methods}
+
+\subsection{Stop-Words Removal}
+
+TODO
+
+\subsection{Term Frequency -- Inverse Document Frequency}
+
+TODO
+
+\subsection{Latent Semantic Indexing}
+
+TODO
+
+\subsection{Chi-Squared Selection}
+
+TODO
