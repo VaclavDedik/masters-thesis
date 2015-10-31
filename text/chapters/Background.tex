@@ -44,11 +44,23 @@ The problem of our thesis can be solved with supervised learning as the assignee
 
 \section{Classification Models}
 
+Classification models we use in our thesis are described in this section. As we established in the previous section, our problem falls under supervised text classification. With this information only, we can determine what learning algorithms are most suitable and which models we can safely disregarded. After studying related works (see \autoref{chapter:related-work}), we consider three ML algorithms starting off with \textit{Naive Bayes} (NB) as that is the most usual choice for this problem because of its simplicity and relatively good performance. After that, we discuss \textit{Decision Tree Learning} and finally we conclude with \textit{Support Vector Machine} (SVM) -- one of the most prominent text classification techniques.
+
 \subsection{Naive Bayes}
 
-TODO
+The first supervised classification model we introduce is the Naive Bayes. It is probably the most intuitive way of doing text classification as it relies on probability to predict the most likely class for a document. The idea is quite simple, compute the conditional probability $P$ that document $d$ belongs to class $c$. Formally:
 
-\subsection{Decision Tree}
+$$P(c|d) \propto P(c) \prod_{1 \leq k \leq n_d} P(t_k|c)$$ 
+
+$P(c)$ is the probability of a document belonging to class $c$. $P(t_k|c)$ is the conditional probability that term $t_k$ occurs in a document that belongs to class $c$ and $n_d$ is number of documents. This formula is based on Bayes' theorem, it, however, ignores the denominator of the full equation as it is not needed for finding the most probable class. Another important note is that the formula above assumes the $P(t_k|c)$ probabilities are independent (i.e. the occurrence of term $t_k$ does not decrease or increase the probability of occurrence of term $t_l$). In practice, it is unlikely that all terms are independent, if there is the term \textit{Machine} in a document, it probably slightly increases the probability that there is also the term \textit{Learning}. This naive assumption is the reason for the name of the classification model.\todo{citation needed}
+
+The goal of a classifier based on NB is to predict which class is the most likely for a document. The first step (training) is to determine the probabilities $P(c)$ and $P(t_k|c)$. Unfortunately, it is only possible to \textit{estimate} these probabilities based on previous labeled documents, the amount of these documents increases the accuracy of the probabilities. We will write $\hat{P}$ instead of $P$ to refer to the estimated probabilities. The second step (prediction) is to compute the most likely or \textit{maximum a posteriori} (MAP) class $c_{map}$ like this ($C$ is a set of all classes):
+
+$$c_{map} = \argmax_{c \in C} \hat{P}(c|d) = \argmax_{c \in C} \hat{P}(c) \prod_{1 \leq k \leq n_d} \hat{P}(t_k|c)$$
+
+Naive Bayes is not only very simple intuitive way of text classification, it is also relatively fast having quadratic training time complexity $\Theta(|C||V|)$ (ignoring preprocessing of documents which is usually linear anyway unless employing more advance preprocessing techniques) where $|C|$ is number of classes and $|V|$ is the size of the vocabulary.\todo{citation needed} This makes NB quite useful in many scenarios despite relatively low performance.
+
+\subsection{Decision Tree Learning}
 
 TODO
 
