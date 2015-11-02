@@ -121,8 +121,25 @@ $$tfidf(t,d,D) = tf(t,d) \times idf(t,D)$$
 
 \subsection{Latent Semantic Indexing}
 
-TODO
+Latent semantic indexing (LSI) refers to a technique that uses singular value decomposition (SVD, \autoref{theorem:svd}) to reduce dimensionality of a term-document matrix (a matrix with columns representing document instances and rows representing terms). The resulting lower rank matrix yields to a new representation of the documents in the dataset.
 
-\subsection{Chi-Squared Selection}
+Consider a dataset $D$ that consists of 1000 bug report descriptions. These descriptions can sometimes be quite long therefore after you count all the words in them and create a feature vector (vector with number of occurrences for all unique terms/words in all documents), you usually discover there are about 6000-10000 unique words even if you remove all stop-words. This yields a term-document matrix $C$ with 1000 columns and 6000-10000 rows. Using dimensionality reduction such as LSI can reduce the number of rows as much as 20-fold without loosing much performance or even gaining some. The number of columns is chosen by the user as parameter $k$.
 
-TODO
+\begin{theorem}
+\label{theorem:svd}
+Let $r$ be the rank (number of linearly independent rows) of the $C$ matrix with dimensions $M \times N$. There is a singular value decomposition of $C = U \Sigma V^T$, where:
+\begin{enumerate}
+    \item The eigenvalues $\lambda_1,...,\lambda_r$ are the same for both $CC^T$ and $C^TC$
+    \item For $1 \leq i \leq r$, let the \textit{singular values} $\sigma_i = \sqrt{\lambda_i}$ with $\lambda_i \geq \lambda_{i+1}$. Then the $M \times N$ diagonal matrix $\Sigma$ is composed by setting $\Sigma_{ii} = \sigma_i$ for $1 \leq i \leq r$.
+\end{enumerate}
+\end{theorem}
+
+The application of LSI to a term-document matrix $C$ is done by computing the SVD matrices in the form described in \autoref{theorem:svd} and then by finding matrix $C_k = U \Sigma_k V^T$, where $\Sigma_k$ is derived from $\Sigma$ by replacing all the $r-k$ smallest singular values by zeros. The resulting matrix $C_k$ has rank at most $k$ as $r-k$ values of the $\Sigma$ matrix were replaced by zeros.
+
+\subsection{Chi-Square Selection}
+
+In statistics, the Chi-square test is used to examine independence of two events. Similarly, we can use the test to rank all our terms by their independence with respect to classes and then set a threshold to select only $n$ features with the highest value of the Chi-square statistic. The Chi-square value is computed as follows:
+
+$$\chi^2 = \sum_{i=1}^m \sum_{j=1}^k \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+
+Where $m$ is the number of intervals that are used for \textit{discretization} of features, $k$ is number of classes, $O_{ij}$ is the observed number of samples in the $i$th interval and $j$th class and $E_{ij}$ is the expected number of samples in the $i$th interval and $j$th class.
