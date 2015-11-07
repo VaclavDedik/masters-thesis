@@ -3,15 +3,20 @@
 
 In this chapter, we present the results for various models on three datasets. First, we provide a description and origin of these datasets. Then we compare the performance of the models and the datasets. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by the private company. In the third section, we compare the performance for different number of recommendations.\todo{What else? There should probably be more.}
 
-Before we dive into the analysis, we provide a flow chart that summarizes the process of analysis on figure~\ref{fig:model.flowchart}. The process begins by retrieving a dataset from a bug tracking system, filtering unwanted bug reports, randomly shuffling the data and finally splitting it into cross-validation and training set. Both sets are then separately subjected to application of feature extraction methods. The training dataset is then used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis. 
+\section{Process Overview}
 
+Before we dive into the analysis, we provide a flow chart that summarizes the process of analysis on figure~\ref{fig:model.flowchart}.
+
+The process begins by retrieving a dataset from a bug tracking system, filtering unwanted bug reports, randomly shuffling the data and finally splitting it into cross-validation and training set. Both sets are then separately subjected to application of feature extraction methods. The training dataset is then used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis.
+
+\begin{landscape}
 \begin{figure}[htbp]
     \centering
-        \includegraphics[width=\textwidth]{./images/flowchart/analysis_flowchart.pdf}
+        \includegraphics[width=550px]{./images/flowchart/analysis_flowchart.pdf}
     \caption{Flowchart of the Analysis Process}
     \label{fig:model.flowchart}
 \end{figure}
-
+\end{landscape}
 
 \section{Datasets}
 \label{section:datasets}
