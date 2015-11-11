@@ -93,7 +93,20 @@ Applying decision tree learning on text classification is usually done by counti
 
 \subsection{Support Vector Machine}
 
-TODO
+The Support Vector Machine (SVM) is a state-of-the-art machine learning algorithm introduced in 1992 by Boser, Guyon, and Vapnik~\cite{boser1992training}. It has been widely used in bioinformatics as well as in text classification due to its ability to deal with high-dimensional data while maintaining good accuracy. SVMs belong to a class of algorithms for pattern analysis called \textit{kernel methods}. Kernel methods enable us to operate in a high-dimensional feature space without the need to compute the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space~\cite{Ben-hur}\cite{manning2008introduction}. In this section, we will first look at how SVMs with simple linear classification operate and then look at how more advanced classification can be done with kernel functions.
+
+\begin{figure}[htbp]
+    \centering
+        \includegraphics[page=3,trim=5.5cm 16cm 4cm 6.5cm,clip,width=\textwidth]{./images/external/intro-ir-svm.pdf}
+    \caption{Depiction of SVM decision boundary with support vectors and margins (image taken from~\cite{manning2008introduction})}
+    \label{fig:background.svm.decision.intro}
+\end{figure}
+
+The general way SVMs operate is straightforward. Instead of trying to find a function that fits training data as well as possible by optimizing the distance from samples to the function, SVM algorithm attempts to find a linear separator of positive and negative samples by optimizing the margin of the decision boundary (hyperplane). See figure~\ref{fig:background.svm.decision.intro}. As you can see, the samples that limit the margin of the decision boundary on the left and right side are called support vectors, there is always at least two samples on at least one side in a fully optimized SVM, otherwise the margins could still be further maximized.
+
+You can probably spot a problem in this mathematical model. The positive and negative samples can be mixed up together so much that there simply is not a room for an applicable decision boundary. This is why the strictness of the optimization algorithm can be relaxed by tuning the regularization parameter $C$. Setting this parameter to a higher value allows the optimization algorithm to ignore some positive or negative examples (called \textit{outliers}) on the wrong side of the decision hyperplane.
+
+We will now proceed to have a look at non-linear classification with SVMs. In many applications, linear classification is not enough to warrant a good decision boundary and therefore performance. For this reason, we define non-linear classification that can deal with data that follow a more complicated structure. Using kernel functions, we can effectively transform the decision boundary into polynomial, Gaussian or sigmoid function. Due to using technique called \textit{kernel trick}, this can be done without increasing the time complexity of the learning algorithm.
 
 \section{Feature Extraction Methods}
 
@@ -121,7 +134,7 @@ $$tfidf(t,d,D) = tf(t,d) \times idf(t,D)$$
 
 \subsection{Latent Semantic Indexing}
 
-Latent semantic indexing (LSI) refers to a technique that uses singular value decomposition (SVD, \autoref{theorem:svd}) to reduce dimensionality of a term-document matrix (a matrix with columns representing document instances and rows representing terms). The resulting lower rank matrix yields to a new representation of the documents in the dataset.
+Latent semantic indexing (LSI) refers to a technique that uses singular value decomposition (SVD, \autoref{theorem:svd} taken from~\cite{manning2008introduction}) to reduce dimensionality of a term-document matrix (a matrix with columns representing document instances and rows representing terms). The resulting lower rank matrix yields to a new representation of the documents in the dataset.
 
 Consider a dataset $D$ that consists of 1000 bug report descriptions. These descriptions can sometimes be quite long therefore after you count all the words in them and create a feature vector (vector with number of occurrences for all unique terms/words in all documents), you usually discover there are about 6000-10000 unique words even if you remove all stop-words. This yields a term-document matrix $C$ with 1000 columns and 6000-10000 rows. Using dimensionality reduction such as LSI can reduce the number of rows as much as 20-fold without loosing much performance or even gaining some. The number of columns is chosen by the user as parameter $k$.
 
