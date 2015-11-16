@@ -4,9 +4,9 @@ This chapter describes the methodology of the evaluation as well as its applicat
 
 \section{The Goal Question Metric Approach}
 
-The focus of the GQM approach is to define a good measurement mechanism mainly for engineering disciplines like software engineering, computer science and others. Application of this approach helps support project planning, determine pros and cons of the current project and process, provide an intuition about the impact of modifying or refining a technique as well as assess current progress and last but not least to write the final work in a comprehensible and structured way.
+The focus of the GQM approach is to define a good measurement mechanism mainly for engineering disciplines like software engineering, computer science and others~\cite{basili1992software}. Application of this approach helps support project planning, determine pros and cons of the current project and process, provide an intuition about the impact of modifying or refining a technique as well as assess current progress and last but not least to write the final work in a comprehensible and structured way~\cite{basili1992software}.
 
-The first prominent step in terms of GQM is to define a set of goals. Goals are entities that are to be assessed and therefore must be defined in a way that allows their assessment. Second step is to define a set of questions, these characterize the way the assessment of a goal is going to be carried out. The last step at the very bottom is to define metrics that are used to answer the questions in a quantitative way. the usual workflow is to define goals and then refine each into several separate questions. The questions are then further refined into metrics where more than one question can have the same metric in common.
+The first prominent step in terms of GQM is to define a set of goals. Goals are entities that are to be assessed and therefore must be defined in a way that allows their assessment. Second step is to define a set of questions, these characterize the way the assessment of a goal is going to be carried out. The last step at the very bottom is to define metrics that are used to answer the questions in a quantitative way. the usual workflow is to define goals and then refine each into several separate questions. The questions are then further refined into metrics where more than one question can have the same metric in common~\cite{basili1992software}.
 
 \section{Application of GQM}
 
@@ -72,19 +72,19 @@ The last step is to define metrics used to answer questions above. We use five m
 \begin{framed}
   \hypertarget{metric:a}{Accuracy:}
   \begin{quote}
-    The amount of correctly predicted assignees over all tested predictions, formally:
+    The amount of correctly predicted assignees over all tested predictions~\cite{manning2008introduction}, formally:
     $$Accuracy = \frac{tp+tn}{tp+tn+fp+fn}$$
   \end{quote}
 
   \hypertarget{metric:p}{Macro-Averaged Precision:}
   \begin{quote}
-    The amount of assignees correctly predicted as positive for given test sample over number of assignees either correctly or incorrectly predicted as positive, averaged over all classes\cite{Asch2013}, formally:
+    The amount of assignees correctly predicted as positive for given test sample over number of assignees either correctly or incorrectly predicted as positive, averaged over all classes~\cite{Asch2013}, formally:
     $$Precision_{macro} = \frac{1}{q}\sum_{\lambda=1}^q\frac{tp_{\lambda}}{tp_{\lambda}+fp_{\lambda}}$$
   \end{quote}
 
   \hypertarget{metric:r}{Macro-Averaged Recall:}
   \begin{quote}
-    The amount of assignees correctly predicted as positive for given test sample over number of assignees correctly predicted as positive or incorrectly predicted as negative, averaged over all classes\cite{Asch2013}, formally:
+    The amount of assignees correctly predicted as positive for given test sample over number of assignees correctly predicted as positive or incorrectly predicted as negative, averaged over all classes~\cite{Asch2013}, formally:
     $$Recall_{macro} = \frac{1}{q}\sum_{\lambda=1}^q\frac{tp_{\lambda}}{tp_{\lambda}+fn_{\lambda}}$$ 
   \end{quote}
 
@@ -108,14 +108,14 @@ The last step is to define metrics used to answer questions above. We use five m
 
   \hypertarget{metric:chi}{Chi-Square Test:}
   \begin{quote}
-    Test to assert whether two samples are from the same distribution. The test is performed by calculating the chi-square value and looking up a corresponding value in the chi-square table. The value can be calculated like this ($E$ is expected value and $O$ is observed value):
+    Test to assert whether two samples are from the same distribution~\cite[Chapter~14]{press1996numerical}. The test is performed by calculating the chi-square value and looking up a corresponding value in the chi-square table. The value can be calculated like this ($E$ is expected value and $O$ is observed value):
     $$\chi^2 = \sum\frac{(O - E)^2}{E}$$
   \end{quote}
 
   \hypertarget{metric:tt}{T-Test:}
   \begin{quote}
-    Test to assert whether two samples have the same population mean. The test is performed by first calculating the t-test value and looking up a corresponding value in the t-test table. The value can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set):
-    $$t = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} - \frac{s_2^2}{n_2}}}$$
+    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. We use the independent two-sample t-test for unequal sample sizes and unequal variances also called Welch's t-test. The test is performed by first calculating the t-test value and looking up a corresponding value in the t-test table. The value can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
+    $$t = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
   \end{quote}
 \end{framed}
 
