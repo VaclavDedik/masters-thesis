@@ -1,4 +1,5 @@
 \chapter{Methodology}
+\label{chapter:methodology}
 
 This chapter describes the methodology of the evaluation as well as its application. Running empirical research poses some issues in terms of definition of the hypotheses, replicability of the results and their reporting -- among other factors. To ease the formulation of the goals of the current thesis and to drive the reporting of the results, we decided to use the framework proposed by Victor Basili of the University of Maryland, College Park and the Software Engineering Laboratory at the NASA Goddard Space Flight Center called \textit{Goal Question Metric} (or just GQM)~\cite{basili1992software}.
 
@@ -114,7 +115,7 @@ The last step is to define metrics used to answer questions above. We use five m
 
   \hypertarget{metric:tt}{T-Test:}
   \begin{quote}
-    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. We use the independent two-sample t-test for unequal sample sizes and unequal variances also called Welch's t-test. The test is performed by first calculating the t-test value and looking up a corresponding value in the t-test table. The value can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
+    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. We use the independent two-sample t-test for unequal sample sizes and unequal variances also called Welch's t-test. The test is performed by first calculating the t-test value and looking up a corresponding value in the t-test table.\todo{Explain standard independent t-test as well} The value can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
     $$t = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
   \end{quote}
 \end{framed}

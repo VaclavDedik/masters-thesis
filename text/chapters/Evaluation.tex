@@ -1,11 +1,13 @@
 \chapter{Evaluation}
 \label{chapter:evaluation}
 
-In this chapter, we present the results for various models on three datasets. First, we provide a description and origin of these datasets. Then we compare the performance of the models and the datasets. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by the private company. In the third section, we compare the performance for different number of recommendations.\todo{What else? There should probably be more.}
+In this chapter, we present the results for various models on three datasets. We begin with process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine if the different datasets are similar. We continue our analysis with window size analysis and its effect on performance and we conclude the analysis of the datasets with the study of topic distribution where we look at its change over time. 
+
+Our evaluation starts with baseline model which is used to determine whether our models' performance is significantly better than selection of the most frequent developer. Next, we validate the presumption that stop-words removal is advantageous for all our models and in the next section, we finally compare our models. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by a private company. The second to last section contains comparison of the datasets in terms of performance. In our last section, we show how the performance changes for different number of top recommendations.
 
 \section{Process Overview}
 
-Before we dive into the analysis, we provide a flow chart that summarizes the process of analysis on figure~\ref{fig:model.flowchart}.
+Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}.
 
 The process begins by retrieving a dataset from a bug tracking system, filtering unwanted bug reports, randomly shuffling the data and finally splitting it into cross-validation and training set. Both sets are then separately subjected to application of feature extraction methods. The training dataset is then used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis.
 
@@ -21,11 +23,11 @@ The process begins by retrieving a dataset from a bug tracking system, filtering
 \section{Datasets}
 \label{section:datasets}
 
-To evaluate performance of a model, a set of necessary data is necessary. We provide description of the three datasets that we chose for the evaluation of the models in this section.
+To evaluate performance of a model of ours, a set of a bug tracking data is necessary. We provide description of the three datasets that we chose for the evaluation of the models in this section. We also do a basic analysis of the datasets which will allow us to establish some basic answers to questions \hyperlink{question:4}{4} and \hyperlink{question:5}{5}.
 
 \subsection{Firefox Data}
 
-This dataset is downloaded from Mozilla repository\footnote{https://bugzilla.mozilla.org} in product Firefox. We downloaded all bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED} and were created in year 2010 or later. We also removed bugs with field \texttt{assigned\_to} set to \texttt{nobody@mozilla.org} as those tickets were resolved and fixed but not assigned. This yields $9,141$ bugs in total. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on figure~\ref{fig:datasets.firefox.dist}.
+This dataset is downloaded from Mozilla repository\footnote{https://bugzilla.mozilla.org} from project Firefox. We downloaded all bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED} and were created in year 2010 or later. We also removed bugs with field \texttt{assigned\_to} set to \texttt{nobody@mozilla.org} as those tickets were resolved and fixed but not assigned. This yields $9,141$ bugs in total. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on figure~\ref{fig:datasets.firefox.dist}.
 
 \begin{figure}[htbp]
     \centering
@@ -47,7 +49,7 @@ Netbeans data were downloaded from Netbeans bug repository\footnote{https://netb
 
 \subsection{Proprietary Data}
 
-The Proprietary dataset was provided by a company that wants to remain anonymous. The provided dataset contains $2,243$ bug reports created between 2009-03-07 and 2013-08-23. Only bug reports that were resolved with assigned developer were considered. There are $141$ developers in this dataset. Only $1,479$ bugs assigned to $28$ developers were retained after removal of developers with less than $30$ fixed bugs. The histogram and probability distribution is pictured on figure~\ref{fig:datasets.proprietary.dist}.
+The Proprietary dataset was provided by a company that wants to remain anonymous. The provided dataset contains $2,926$ bug reports created between 2012-11-23 and 2015-10-16. Only bug reports that were resolved with assigned developer were considered. There are $110$ developers in this dataset. Only $2,424$ bugs assigned to $35$ developers were retained after removal of developers with less than $30$ fixed bugs. The histogram and probability distribution is pictured on figure~\ref{fig:datasets.proprietary.dist}.
 
 \begin{figure}[htbp]
     \centering
@@ -62,7 +64,7 @@ In this section, we test the null hypothesis that two samples are from the same 
 
 The Chi-Squared test with Netbeans and Firefox samples yields p-value of $0.4283$, as p-value~$> 0.05$ we fail to reject the null hypothesis that the two samples are from the same distribution with 5\% level of significance.
 
-The test with Firefox and Proprietary samples returns p-value equal to $0.8169$ so we again fail to reject the null hypothesis with 5\% level of significance. The last test with samples from Proprietary and Netbeans data results in p-value of $0.6735$, which again means the null hypothesis cannot be rejected with 5\% significance level.
+The test with Firefox and Proprietary samples returns p-value equal to $0.8648$ so we again fail to reject the null hypothesis with 5\% level of significance. The last test with samples from Proprietary and Netbeans data results in p-value of $0.6182$, which again means the null hypothesis cannot be rejected with 5\% significance level.
 
 \subsection{T-Test}
 
@@ -70,16 +72,20 @@ In the previous section, we tested the hypothesis that the datasets used in this
 
 We use the two-sided alternative of the standard independent two-sample t-test to test the null hypothesis that the samples have the same population mean, and the two-sided alternative of the Levene test to test the null hypothesis that the samples have equal population variance. If we reject the null hypothesis of the Levene test, we use the two-sided alternative of the Welch's t-test instead of the standard t-test.
 
-First, we test the samples from Firefox and Proprietary datasets. The Levene test yields p-value equal to $0.0373$, as p-value~$< 0.05$, we reject the null hypothesis with 5\% significance level. To test the population mean of the two samples, we therefore have to use the Welch's t-test. The Welch's t-test results in p-value of $0.0343$, which means we have to reject the null hypothesis of equal population mean of the two samples with 5\% significance.
+First, we test the samples from Firefox and Proprietary datasets. The Levene test yields p-value equal to $0.2730$, as p-value~$> 0.05$, we fail to reject the null hypothesis with 5\% significance level. To test the population mean of the two samples, we therefore have to use the standard independent t-test. The standard independent t-test results in p-value of $0.1954$, which means we fail to reject the null hypothesis of equal population mean of the two samples with 5\% significance.
 
-Second, we test the samples from Firefox and Netbeans repositories. As the Levene tests returns p-value equal to $0.5166$, which is greater than the $\alpha$ of $0.05$, we fail to reject the null hypothesis of equal population variances with 5\% level of significance. Next, we use the standard independent t-test to test the population means. The p-value of this t-test on these two samples is equal to $0.7138$, which means we fail to reject the null hypothesis of equal population means with 5\% significance.
+Second, we test the samples from Firefox and Netbeans repositories. As the Levene tests returns p-value equal to $0.4397$, which is greater than the $\alpha$ of $0.05$, we fail to reject the null hypothesis of equal population variances with 5\% level of significance. Next, we use the standard independent t-test to test the population means. The p-value of this t-test on these two samples is equal to $0.5924$, which means we fail to reject the null hypothesis of equal population means with 5\% significance.
 
-Last samples we test are from Netbeans and Proprietary datasets. The p-value of the Levene test for these two samples is $0.0216$ thus we reject the null hypothesis of equal variances. The p-value of the Welch's t-test is equal to $0.0039$, which again means we can reject the null hypothesis that the two samples have the same population mean with 5\% significance.
+Last samples we test are from Netbeans and Proprietary datasets. The p-value of the Levene test for these two samples is $0.6007$ thus we fail to reject the null hypothesis of equal variances. The p-value of the standard independent t-test is equal to $0.3061$, which again means we can reject the null hypothesis that the two samples have the same population mean with 5\% significance.
+
+\subsection{Conclusion}
+
+Our basic analysis of the datasets allows us to partially answer two questions established in chapter~\ref{chapter:methodology}. The similarity in the distributions and means of the datasets seem to suggest that the models we establish later in this chapter should work on all datasets without tuning the parameters (\hyperlink{question:4}{Q4}). The results of our chi-square test and t-test imply there is not much difference between proprietary and open-source data, partially answering~\hyperlink{question:5}{Q5}. Our confidence in these answers will be further refined when we evaluate our models and datasets later in this chapter.
 
 \section{Window Size}
 \label{section:window-size}
 
-The size of the time window is an important question that needs to be addressed when dealing with machine learning. A naive approach uses all samples from a dataset to train the classifier, but a more advanced approach considers what effect does the size of the window have on the data and how it can improve the performance. In this section, we try to address this concern by evaluating the performance of the classifier for different sizes of the window.
+The size of the time window is an important question that needs to be addressed when dealing with machine learning. A naive approach uses all samples from a dataset to train the classifier, but a more advanced approach considers what effect does the size of the window have on the data and how it can improve the performance. In this section, we try to address this concern by evaluating the performance of the classifier for different sizes of the window (addressing~\hyperlink{question:6}{Q6}).
 
 To determine weather a different size of the window helps the performance is a difficult endeavour, we attempt it by employing three different approaches, each approach can be described by two properties like this:
 
@@ -97,7 +103,7 @@ In the first approach, we first remove all bugs from the whole dataset that were
 
 The disadvantage of this approach is that you select fixed number of bugs from each period. In real world, each period can contain different number of bug reports based e.g. on season. Another disadvantage is that you remove developers that do not meet the criteria of 20 bugs fixed based on the whole dataset. If some developers were very active in the past but are no longer very relevant, they will not be removed from a dataset that is constructed from periods in which the developer no longer fulfills the criteria.
 
-The result is visualized on figure~\ref{fig:window.firefox.1a}. You can see that about the best result is achieved with the size of the window equal to 30 months. Unfortunately, the performance of the classifier for other sizes is very similar and the results is therefore quite inconclusive.
+The result is visualized on figure~\ref{fig:window.firefox.1a}. You can see that about the best result is achieved with the size of the window equal to 30 months. Unfortunately, the performance of the classifier for other sizes is very similar and the results are therefore inconclusive.
 
 \begin{figure}[htbp]
     \centering
@@ -112,7 +118,7 @@ In the second approach, we employ the same periods, except period 1 that is abou
 
 The disadvantage of the second approach is that it does not really tell us what size of the window can be used to get the best performance. What it shows is whether the size of the window from which an equal size of sample is selected matters.
 
-Figure~\ref{fig:window.firefox.2a} shows the plot of this approach. The performance decreases as the size of the window increases, which is expected. Precision and recall however increases when the size of the window is around 45 months.~\todo{Try to figure out why}
+Figure~\ref{fig:window.firefox.2a} shows the plot of this approach. The performance decreases as the size of the window increases, which is expected. Precision and recall however increases when the size of the window is around 45 months.
 
 \begin{figure}[htbp]
     \centering
@@ -134,44 +140,52 @@ The advantage is that this approach is closest to reality (no random selection).
     \label{fig:window.firefox.3a}
 \end{figure}
 
-\section{Time-Window Analysis}
+\subsection{Conclusion}
 
-In this section, we analyze the distribution of topics with respect to time for Proprietary and Firefox datasets. We model 30 topics using Latent Dirichlet Allocation in our approach.
+Even after the application of all three approaches, it is hard to draw a concrete conclusion about the window size effect on the performance. The results do seem to imply that there are no significant differences in terms of performance between different time-windowing strategies (\hyperlink{question:6}{Q6}), but to increase the confidence of these results, it would be necessary to do a more thorough analysis with possibly more approaches or different processing strategy.
+
+\section{Topic Analysis}
+
+In this section, we analyze the distribution of topics with respect to time for proprietary and Firefox datasets. We model 10 topics using Latent Dirichlet Allocation in our approach.
+
+The plots show the prevalence of topics each month where a different shade of gray represents a different topic. In terms of our GQM methodology, this section contributes to the answer of questions~\hyperlink{question:4}{4} and~\hyperlink{question:5}{5} (described in chapter~\ref{chapter:methodology}).
 
 \subsection{Firefox Data}
 
-All our Firefox bug reports were created within 62 months. You can see the distribution on figure~\ref{fig:distribution.firefox.topic}.
+All our Firefox bug reports were created within 62 months. You can see the distribution on figure~\ref{fig:distribution.firefox.topic}. The plot shows that the distribution of topics is quite significantly different each month with two dominant topics. The distribution of the topics seems to oscillate periodically which could be an indication of a release cycle of major Firefox versions, which would not be surprising as many projects have a predetermined periodic release cycle. 
 
 \begin{figure}[htbp]
     \centering
-        \includegraphics[width=\textwidth]{./images/topic_component_distribution/firefox_topic.pdf}
+        \includegraphics[width=\textwidth]{./images/topic_component_distribution/firefox_topic_10.pdf}
     \caption{Time-Window Analysis of Firefox Data by Topics}
     \label{fig:distribution.firefox.topic}
 \end{figure}
 
 \subsection{Proprietary Data}
 
-The proprietary bug reports were created within 48 months. You can see the distribution on figure~\ref{fig:distribution.prop.topic}.
+The proprietary bug reports were created within 36 months. You can see the distribution on figure~\ref{fig:distribution.prop.topic}. The plot again shows that the distribution of topics in the proprietary datasets is quite different each month, although their dominance changes quite a lot as well. The first few months are dominated by a single topic, but its significance later drops as other topics take over. Contrary to the Firefox distribution, there does not seem to be an indication of a release cycle, instead, each topic seems to be important only for a limited period of time.
 
 \begin{figure}[htbp]
     \centering
-        \includegraphics[width=\textwidth]{./images/topic_component_distribution/proprietary_topic.pdf}
+        \includegraphics[width=\textwidth]{./images/topic_component_distribution/proprietary_topic_10.pdf}
     \caption{Time-Window Analysis of Proprietary Data by Topics}
     \label{fig:distribution.prop.topic}
 \end{figure}
 
+\subsection{Conclusion}
+
+The topic analysis presented in this section does suggest some difference in topic distribution (with respect to time). It is not surprising as different projects are developed different ways, the application of different software development methodologies (scrum, waterfall, TDD etc) is one of the factors that are likely to affect the results. In terms of~\hyperlink{question:4}{Q4}, these results decrease our confidence that our models work for all datasets equally without the need to tune their parameters. As far as~\hyperlink{question:5}{Q5} is concerned, the difference between the Firefox and proprietary datasets can be explained by different development processes.
+
 \section{Baseline}
 \label{section:baseline}
 
-In this section, we establish a baseline for our models. Our baseline is very simple, the number of bug report that is assigned to each developer is counted and the developer with highest number of reports is selected as a prediction for each subsequent call of the \texttt{predict} function.
+In this section, we establish a baseline for our models (addressing~\hyperlink{question:1}{Q1}). Our baseline is very simple, the number of bug report that is assigned to each developer is counted and the developer with the highest number of assigned bugs is selected as a prediction for each subsequent call of the \texttt{predict} function.
 
-Figure~\ref{fig:models.firefox.stopwords} shows the performance of the baseline model on Firefox data. While the accuracy of this model is relatively high (18\%), the precision and recall values are much lower (1\% and 5\%), which can be explained by the way macro-averaged metrics work, see TODO\todo{Replace with reference to the chapter/section which describes the metrics}. 
+Figure~\ref{fig:models.firefox.stopwords} shows the performance of the baseline model on Firefox data. While the accuracy of this model is relatively high (18\%), the precision and recall values are much lower (1\% and 5\%), which can be explained by the way macro-averaged metrics work, see metrics in chapter~\ref{chapter:methodology}. 
 
 \section{Stop-Words Removal}
 
 Stop-words removal is a technique that can increases performance of the model. In this section, we determine whether the increase is significant enough to use it for subsequent comparisons of models.
-
-Figure~\ref{fig:models.firefox.stopwords} shows the increase in performance after all stop-words were removed from the feature vector of the Firefox data. You can see that the performance of the classifier slightly increased on all models. Accuracy increased by 3\%, 0\% and 1\% on SVM, Naive Bayes and CART model respectively. Precision value of the SVM model decreased by 1\% but increased by 6\% with Naive Bayes and by 1\% with CART. Finally, Recall values of SVM and Naive Bayes increased by 4\% and 2\% respectively while it slightly decreased on the CART model by about 1\%.
 
 \begin{figure}[htbp]
     \centering
@@ -180,7 +194,9 @@ Figure~\ref{fig:models.firefox.stopwords} shows the increase in performance afte
     \label{fig:models.firefox.stopwords}
 \end{figure}
 
-The results of the other datasets were similar in nature. We therefore conclude that the performance boost of stop-words removal is significant enough to warrant better results, which matches the conclusion of Čubranić and Murphy~\cite{Murphy} (see chapter~\ref{chapter:related-work}). Thus, in our evaluation, we always use stop-words removal in combination with other feature extraction/selection methods.
+Figure~\ref{fig:models.firefox.stopwords} shows the increase in performance after all stop-words were removed from the feature vector of the Firefox data. You can see that the performance of the classifier slightly increased on all models. Accuracy increased by 3\%, 0\% and 1\% on SVM, Naive Bayes and CART model respectively. Precision value of the SVM model decreased by 1\% but increased by 6\% with Naive Bayes model and by 1\% with CART. Finally, Recall values of SVM and Naive Bayes increased by 4\% and 2\% respectively while it slightly decreased with the CART model by about 1\%.
+
+The results of the other datasets were similar in nature. We therefore conclude that the performance boost of stop-words removal is significant enough to warrant better results, which matches the conclusion of Čubranić and Murphy~\cite{Murphy} (see chapter~\ref{chapter:related-work}). Thus, in our evaluation, we always use stop-words removal in combination with other feature extraction methods.
 
 \section{Comparison of Models}
 
