@@ -1,4 +1,4 @@
-\chapter{Evaluation}
+\chapter{Evaluation and Analysis}
 \label{chapter:evaluation}
 
 In this chapter, we present the results for various models on three datasets. We begin with process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine if the different datasets are similar. We continue our analysis with window size analysis and its effect on performance and we conclude the analysis of the datasets with the study of topic distribution where we look at its change over time. 
@@ -200,7 +200,9 @@ The results of the other datasets were similar in nature. We therefore conclude 
 
 \section{Comparison of Models}
 
-In the following text, comparison of the models is presented. We show the accuracy, precision and recall of these models on three datasets.\todo{What models? Explain or provide reference.}\todo{Explanation of these measurement metrics should be somewhere and perhaps a reference would be in order.} This comparison allows us to conclude what model is best for this application.
+In the following text, comparison of the models is presented. We show the \hyperlink{metric:a}{accuracy}, \hyperlink{metric:p}{precision} and \hyperlink{metric:r}{recall} of these models on three datasets. Based on related work (chapter~\ref{chapter:related-work}), we decided to compare three models -- Naive Bayes, CART and Support Vector Machine. The theoretical background of these models is covered in chapter~\ref{chapter:background}. The metrics we use are explained in chapter~\ref{chapter:methodology}.
+
+In terms of GQM, this section attempts to answer question~\hyperlink{question:2}{2} (how many times the model predicts the correct assignee), question~\hyperlink{question:3}{3} (how many times the model predicts the correct assignee if the distribution of bug reports is unbalanced) and question~\hyperlink{question:4}{4} (if the model with the same parameters works with all projects). The answers are addressed in the conclusion of this section.
 
 \subsection{Firefox Data}
 
@@ -215,7 +217,7 @@ On Figure~\ref{fig:results.models.firefox}, you can see the performance of the c
 
 \subsection{Netbeans Data}
 
-The performance of the models on Netbeans data is shown on Figure~\ref{fig:results.models.netbeans}. It is clear that the SVM model with TF-IDF weighing performs best even on the Netbeans data, although in this case the LSI feature extraction technique does not seem to perform as well as in the previous case. The accuracy, precision and recall of the approach are 53\%, 53\% and 49\% respectively. Sole SVM model and SVM+$\chi^2$ model perform similarly as far as precision is concerned, while the accuracy and recall values are lagging behind by a considerable margin. None of the other models offer better performance than even sole SVM model on this data, which suggests that SVM is a very good choice in this domain.
+The performance of the models on Netbeans data is shown on Figure~\ref{fig:results.models.netbeans}. It is clear that the SVM model with TF-IDF weighing performs best even on the Netbeans data, although in this case the LSI feature extraction technique does not seem to perform as well as in the previous case. The accuracy, precision and recall of the approach are 53\%, 53\% and 49\% respectively. Sole SVM model and SVM+$\chi^2$ model perform similarly as far as precision is concerned, while the accuracy and recall values are lagging behind by a considerable margin. None of the other models offer better performance than even sole SVM model on this data, which suggests that SVM is a very good choice for automatic bug assignment.
 
 \begin{figure}[htbp]
     \centering
@@ -226,7 +228,7 @@ The performance of the models on Netbeans data is shown on Figure~\ref{fig:resul
 
 \subsection{Proprietary Data}
 
-In this case, the performance of all models decreased a lot in comparison with the other datasets. However, even in this case, the SVM model with TF-IDF offers the best performance of 37\% accuracy, 32\% precision and 31\% recall. The same model with LSI also shows quite a good performance and quite surprisingly, the Naive Bayes model with LSI performs quite well as far as precision and recall is concerned. Figure~\ref{fig:results.models.proprietary} presents the results in graphical manner.
+The proprietary data results are similar to the open-source datasets. Even in this case, the SVM model with TF-IDF offers the best performance of 53\% accuracy, 59\% precision and 47\% recall. The same model with LSI also shows quite a good performance and quite surprisingly, the Naive Bayes model with $\chi^2$ and TF-IDF performs quite well as far as precision is concerned. Both SVM and Naive Bayes models exhibit rather wide spreads between precision and recall values, which could be an indication of higher variance of the proprietary data (the distribution chart in section~\ref{section:datasets} seems to support this statement). Figure~\ref{fig:results.models.proprietary} presents the results in a graphical manner.
 
 \begin{figure}[htbp]
     \centering
@@ -237,18 +239,22 @@ In this case, the performance of all models decreased a lot in comparison with t
 
 \subsection{Conclusion}
 
-The comparison shows that SVM with TF-IDF weighing performs best on all datasets. Not only that, it also generalizes very well, because there was no need to readjust the parameters of the model to get the best or nearly the best performance for all datasets. The disadvantage of the model is that it is the most computationally complex one, because SVM is the slowest of the three models, there are a lot of classes and there are a lot of features. This can be at least partially dealt with by using $\chi^2$ feature extraction in conjunction with TF-IDF while sacrificing some of the performance.
+The comparison shows that SVM with TF-IDF weighing performs best on all datasets. Not only that, it also generalizes very well, because there was no need to readjust the parameters of the model to get the best or nearly the best performance for all datasets. The disadvantage of the model is that it is the most computationally complex one, because SVM is the slowest of the three models as there are a lot of classes and  features. This can be at least partially dealt with by using $\chi^2$ feature extraction in conjunction with TF-IDF while sacrificing some of the performance.
+
+The accuracy of all our models shows us how many times they are able to predict the correct assignee (\hyperlink{question:2}{Q2}). The precision and recall values of these models indicate that the models perform well even for unbalanced data (\hyperlink{question:3}{Q3}), there is, however, slight bias towards higher precision than recall. While the SVM model does not need different settings for different datasets and the NB and CART models do not have any, both LSI and $\chi^2$ feature extraction methods need to be tuned for each dataset to achieve the best performance (\hyperlink{question:4}{Q4}). It is therefore clear that the SVM model with TF-IDF has a huge advantage over all the other models we tested.
 
 \section{Comparison of Datasets}
 \label{section:comparison-of-datasets}
 
-The main purpose of this section is to compare proprietary dataset with open-source dataset. The open-source dataset used for this is from the Firefox project. We selected equal number of reports from both datasets to construct an accurate comparison.\todo{Maybe it would be useful to compare with the Netbeans data too.}\todo{And also it could be quite interesting to use the CART model too.}
+The main purpose of this section is to compare the proprietary dataset with the open-source dataset, providing an answer to question~\hyperlink{question:5}{5} of our application of GQM described in chapter~\ref{chapter:methodology}. In this question, we compare the proprietary dataset with only the Firefox dataset and we only use the Naive Bayes with now feature extraction method other than stop-words removal and SVM models with TF-IDF weighing.
+
+We compare these two datasets by computing their performance (accuracy, precision and recall) for six different settings of the minimum \textit{issues per developers} requirement. These settings are: 1, 3, 5, 10, 20, 30. This allows us to see how the performance of the datasets changes when different number of developers (and bugs assigned to them) are removed. The narrower is the difference of the performance between the datasets for all the settings values, the higher is our confidence there is not much difference between open-source and proprietary data.
 
 \subsection{Naive Bayes Model}
 
 The first model for comparison is Naive Bayes. The only used feature extraction method for this model is stop-words removal.
 
-First plot (Figure \ref{fig:results.datasets.nb_accuracy}) represents accuracy of the Naive Bayes model. You can already see that the open source data perform better than the proprietary data. Accuracy of the classifier is 35\% vs 24\% when $x$ (see above) is set to 30. In the following text, we will always compare the results of this setting of parameter $x$ as we believe that is the best production value for the given size of the dataset.
+First plot (Figure \ref{fig:results.datasets.nb_accuracy}) represents accuracy of the Naive Bayes model. You can see there are some interesting differences between the performances of the proprietary and open-source datasets. When the minimum requirement for issues per developer is 1, the accuracy of the proprietary dataset (33\%) is significantly higher than the accuracy of the open-source dataset (23\%). On the other hand, the accuracy of the proprietary dataset is higher for all settings of minimum issues per developer. When the requirement of issues per developers increases to 30, there is only 5\% difference between the accuracy of the proprietary dataset (40\%) and the open-source dataset (35\%).
 
 \begin{figure}[htbp]
     \centering
@@ -257,7 +263,7 @@ First plot (Figure \ref{fig:results.datasets.nb_accuracy}) represents accuracy o
     \label{fig:results.datasets.nb_accuracy}
 \end{figure}
 
-Second plot (Figure \ref{fig:results.datasets.nb_pr}) is a representation of precision and recall of the same model. Precision of the classifier is 46\% and 22\% for the open source and proprietary data, respectively. Recall value is 29\% for the open source data and 19\% for the proprietary data.
+Second plot (Figure \ref{fig:results.datasets.nb_pr}) shows the precision and recall values of the same model. Precision of the classifier for minimum issues per developer equal to 30 is 47\% and 49\% for the open source and proprietary data, respectively. Recall value is 29\% for the open source data and 33\% for the proprietary data in this settings. For minimum requirement of issues per developer from 1 to 10, we again see the interesting discrepancy observed in the accuracy plot. While the precision of the proprietary dataset begins with 20\%, the precision of the open-source begins with mere 7\%, almost three times lower. The difference between recall values is also staggering as it begins almost three times lower for the open-source dataset (14\% vs 5\%).
 
 \begin{figure}[htbp]
     \centering
@@ -270,7 +276,7 @@ Second plot (Figure \ref{fig:results.datasets.nb_pr}) is a representation of pre
 
 The second model used for comparison of the proprietary dataset with the open-source dataset is Support Vector Machine model with TF-IDF weighing and stop-words removal as this model shows the most promising results.
 
-Figure \ref{fig:results.datasets.svm_accuracy} visualizes accuracy of the model. Even with this model, the open source data perform much better with accuracy value of 54\% vs 33\% of the proprietary data.
+Figure \ref{fig:results.datasets.svm_accuracy} visualizes accuracy comparison of the model. While the accuracy of the proprietary dataset (53\%) is a bit lower than the accuracy of the open-source dataset (54\%) when minimum issues per developer equals 30 and while the value of this measure is about the same for all different values of issues per developer greater than 10, it begins again significantly higher for the proprietary dataset (42\%) than the open-source dataset (29\%). This difference cannot even partially be explained the same way we explained it in the Naive Bayes case as the accuracy difference eventually clears.
 
 \begin{figure}[htbp]
     \centering
@@ -279,7 +285,7 @@ Figure \ref{fig:results.datasets.svm_accuracy} visualizes accuracy of the model.
     \label{fig:results.datasets.svm_accuracy}
 \end{figure}
 
-Precision and recall of the SVM model is pictured on figure \ref{fig:results.datasets.svm_pr}. It again clearly shows that the precision value of the open source data is higher (again about 54 \%) than the precision value of the proprietary data (32\%). The recall value is 49\% for the open-source data and 26\% for the proprietary data.
+Precision and recall of the SVM model is pictured on figure \ref{fig:results.datasets.svm_pr}. This plot, once again, confirms the hypothesis that the performance of the proprietary dataset begins much higher than the performance of the open-source dataset. The precision value of the proprietary dataset is eventually higher (59\%) than the precision value of the open-source dataset (54\%), but the difference at the beginning is just too overwhelming to be explained simply by the difference in performance overall (15\% vs mere 3\%). In the recall case, the right-most case (minimum number of issues per development requirement equal to 30) shows the performance of the proprietary dataset slightly lower (47\%) than that of the open-source dataset (50\%), even in this case, however, the performance for minimum number of issues per development equal to 1 is much higher for the proprietary dataset (14\% vs 3\%).
 
 \begin{figure}[htbp]
     \centering
@@ -290,16 +296,18 @@ Precision and recall of the SVM model is pictured on figure \ref{fig:results.dat
 
 \subsection{Conclusion}
 
-The results clearly show that the open-source data provide much better performance. The number of classes is very similar and the number of reports used for training too, so it is clear that the quality of the open-source reports is higher.\todo{Or maybe there is something else? Try to figure out if that is really the case, if it is, it might be better to provide a better explanation.}
+The results presented in this section suggest an interesting outcome. The performance of the proprietary dataset is generally quite similar to that of the open-source dataset at least as far as the accuracy of the SVM model is concerned. The Naive Bayes model seems to favor the proprietary dataset, however. Another interesting conclusion is that the spread between precision and recall is much higher for the proprietary dataset. This possibly implies higher variance of the dataset. The most striking result, however, emerges when the minimum number of issues per developers equals 1.
 
-\section{Comparison of Performance for Variable Number of Recommendations}
+In terms of GQM defined in chapter~\ref{chapter:methodology}, we are now talking about question~\hyperlink{question:5}{5}. All our results show significant difference in performance for minimum number of issues per developers equal to 1. The much higher performance for the proprietary dataset in this regard can be probably explained by a simple fact -- open-source bug repositories are open to anyone. It is logical to assume that a lot of bug reports in an open-source bug repository are fixed by random users that have never fixed bugs in the project, or fixed only a few of them -- and only several users are actively maintaining the project. Proprietary projects are rarely open to public and it is therefore very unlikely there are many one-time assignees.
+
+\section{Performance for Higher Number of Recommendations}
 \label{section:compare-number-of-recommendations}
 
-We look at the performance of the models for different number of recommendations in this section. The plots will show the performance for number of recommendations from 1 to 10.\todo{More than one model might be in order.}
+We look at the performance of the models for higher number of recommendations than one in this section. The plots will show the performance of the SVM model with TF-IDF weighing trained on the proprietary and Firefox datasets for number of recommendations from 1 to 10. In terms of GQM defined in chapter~\ref{chapter:methodology}, this section answers question~\hyperlink{question:7}{7}.
 
 \subsection{Support Vector Machine Model}
 
-For this comparison, we, again, take the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} shows how the accuracy increases when the number of recommendations increases, which is expected as the more there are recommendation, the higher the chance of a hit is.\todo{Precision and recall would be useful too maybe.}
+For this comparison, we use the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} shows how the accuracy increases with the number of recommendations, which is expected as the more there are recommendation, the higher the chance of a hit is.
 
 \begin{figure}[htbp]
     \centering
@@ -308,8 +316,8 @@ For this comparison, we, again, take the SVM model with TF-IDF weighing and stop
     \label{fig:results.topx.svm_accuracy}
 \end{figure}
 
-It is apparent from the plot that the highest performance boost happens when the number of recommendations changes from one to two both for the proprietary data and the Firefox data. 
+It is apparent from the plot that the highest performance boost happens when the number of recommendations changes from one to two both for the proprietary dataset (54\% vs 66\%) and the Firefox dataset (59\% vs 72\%). The accuracy of the Firefox dataset is equal to 90\% for 5 recommendations and 81\% for proprietary dataset. When the number of recommendations is 10, the performance is 97\% and 90\% for the Firefox and proprietary data respectively.
 
 \subsection{Conclusion}
 
-From the results in this section, we concluded that the best number of recommendations to suggest to users is 5. The performance does not increase very much with more recommendations and it would probably only lead to confusion if the number of recommendations was too high.
+From the results in this section, we conclude that the highest number of recommendations to suggest to users that makes sense is 5. The performance does not increase very much with more recommendations and it would probably only lead to confusion if the number of recommendations was too high.
