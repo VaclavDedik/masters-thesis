@@ -7,7 +7,7 @@ Our thesis could not exist without some fundamentals that were developed by rese
 
 Machine Learning is a field of study in \textit{Artificial Intelligence} (AI) that enables programing of intelligent computer software that is able to learn from experience to improve its performance~\cite{Samuel1959}. This definition fits a very broad amount of techniques including linear and logistic regression, clustering, decision tree learning, probabilistic classification, deep learning using artificial neural networks and many more~\cite{bishop2006pattern}. Our thesis uses these ML techniques to achieve text classification.
 
-Text classification (or document classification) is a problem in computer science that attempts to assign documents to several categories (classes)~\cite{Anvik2006}. A simple example is spam detection where the goal is to determine whether an incoming email is an unsolicited message and should not therefore be presented to the user. Another more complex example is to classify books by their descriptions into several categories based on genres or sentiment analysis of a review (determining the attitude of the reviewer~\cite{pang2008sentiment} -- which can help us determine public opinion about some topic or customer's opinion about a product). Machine Learning allows us to solve this problem without some intricate user intervention.
+Text classification (or document classification) is a problem in computer science that attempts to assign documents to several categories (classes)~\cite{Anvik2006}. A simple example is spam detection where the goal is to determine whether an incoming email is an unsolicited message and should not therefore be presented to the user. Another more complex example is to classify books by their descriptions into several categories based on genres or sentiment analysis of a review (determining the attitude of the reviewer~\cite{pang2008sentiment}---which can help us determine public opinion about some topic or customer's opinion about a product). Machine Learning allows us to solve this problem without some intricate user intervention.
 
 In the following text, we briefly show how basic learning algorithms work. This will allow us to understand more complicated topics essential for the next two sections. We also explore some basic ML classes (or categories) relevant for this thesis that are used to distinguish ML algorithms into groups.
 
@@ -21,7 +21,7 @@ $$J(\theta) = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2$$
 
 This cost function penalizes the hypothesis function if the function does not fit the data well. The goal is therefore to find a $\theta$ parameter that shifts the hypothesis function towards a better fit causing decrease in the cost function output value.
 
-There are other forms of learning algorithms, this however demonstrates how a general learning algorithm can be constructed. To summarize, the goal is usually very simple -- optimize a mathematical model to fit an existing dataset as well as possible. Based on the constructed mathematical model, predict the output for subsequent data samples to aid the user in their task.
+There are other forms of learning algorithms, this however demonstrates how a general learning algorithm can be constructed. To summarize, the goal is usually very simple---optimize a mathematical model to fit an existing dataset as well as possible. Based on the constructed mathematical model, predict the output for subsequent data samples to aid the user in their task.
 
 \subsection{Regression and Classification}
 
@@ -47,7 +47,7 @@ The problem of our thesis can be solved with supervised learning as the assignee
 
 Classification models we use in our thesis are described in this section. As we established in the previous section, our problem falls under supervised text classification. With this information only, we can determine what learning algorithms are most suitable and which models we can safely disregarded.
 
-After studying related work (see \autoref{chapter:related-work}), we consider three ML algorithms starting off with \textit{Naive Bayes} (NB) as that is the most usual choice for this problem because of its simplicity and relatively good performance. After that, we discuss \textit{Decision Tree Learning} and finally we conclude with \textit{Support Vector Machine} (SVM) -- one of the most prominent text classification techniques discovered in the second half of the previous century~\cite{vapnik1995svm}.
+After studying related work (see \autoref{chapter:related-work}), we consider three ML algorithms starting off with \textit{Naive Bayes} (NB) as that is the most usual choice for this problem because of its simplicity and relatively good performance. After that, we discuss \textit{Decision Tree Learning} and finally we conclude with \textit{Support Vector Machine} (SVM)---one of the most prominent text classification techniques discovered in the second half of the previous century~\cite{vapnik1995svm}.
 
 \subsection{Naive Bayes}
 
@@ -123,7 +123,7 @@ Stop-words removal is a feature extraction method that removes unnecessary words
 
 Term Frequency--Inverse Document Frequency (TF--IDF) is a numerical statistic that used to determine the importance of a word in a document~\cite{tfidf2014}. This statistic can be used as a feature extraction method by simply computing it for each feature (word frequency) of each sample (document). We describe the way the statistic is computed in this subsection.
 
-The value of TF-IDF statistic is computed as the product of two other statistics -- term frequency and inverse document frequency~\cite{tfidf2014}. There are many ways to compute term frequency, we can either simply count number of words in a document (which we usually already have from previous steps of feature extraction) or choose a different more advanced possibility~\cite{manning2008introduction}. One such possibility is to use logarithmically scaled term frequency ($t$ is term, $d$ is document and $tf_{raw}$ is a function that returns number of terms $t$ in a document $d$):
+The value of TF-IDF statistic is computed as the product of two other statistics---term frequency and inverse document frequency~\cite{tfidf2014}. There are many ways to compute term frequency, we can either simply count number of words in a document (which we usually already have from previous steps of feature extraction) or choose a different more advanced possibility~\cite{manning2008introduction}. One such possibility is to use logarithmically scaled term frequency ($t$ is term, $d$ is document and $tf_{raw}$ is a function that returns number of terms $t$ in a document $d$):
 
 $$tf_{log}(t,d) = 1 + log tf_{raw}(t,d)$$
 
