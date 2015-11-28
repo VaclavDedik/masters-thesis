@@ -9,13 +9,15 @@ Our evaluation starts with baseline model which is used to determine whether our
 
 Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}.
 
-The process begins by retrieving a dataset from a bug tracking system, filtering unwanted bug reports, randomly shuffling the data and finally splitting it into cross-validation and training set. Both sets are then separately subjected to application of feature extraction methods. The training dataset is then used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis.
+The process begins by retrieving a dataset from a bug tracking system. It then proceeds by filtering unwanted bug reports (unassigned for example), randomly shuffling the data (to get more accurate results) and finally splitting it into a cross-validation set (30\%) and a training set (70\%). Both sets are then separately subjected to application of feature extraction methods.
+
+The training dataset is used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis.
 
 \begin{landscape}
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=550px]{./images/flowchart/analysis_flowchart.pdf}
-    \caption{Flowchart of the Analysis Process}
+    \caption{Flowchart of the Evaluation and Analysis Process}
     \label{fig:model.flowchart}
 \end{figure}
 \end{landscape}

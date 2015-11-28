@@ -115,8 +115,13 @@ The last step is to define metrics used to answer questions above. We use five m
 
   \hypertarget{metric:tt}{T-Test:}
   \begin{quote}
-    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. We use the independent two-sample t-test for unequal sample sizes and unequal variances also called Welch's t-test. The test is performed by first calculating the t-test value and looking up a corresponding value in the t-test table.\todo{Explain standard independent t-test as well} The value can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
-    $$t = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
+    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. There are two t-tests we use, the independent two-sample t-test for unequal variances, also called Welch's t-test, and the independent two-sample t-test for equal variances. For each dataset, we therefore have to first determine whether the datasets have the same sample variance, which we determine by the Levene's test. 
+
+    Both t-tests are performed by first calculating the t-test statistic and looking up a corresponding value in the t-test table. The statistic for the Welch's t-test can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
+    $$t = \frac{\bar{X_1} - \bar{X_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
+
+    The statistic for the independent two-sample t-test for equal variances is calculated like this ($s_{X_1 X_2}$ is the pooled standard deviation):
+    $$t = \frac{\bar{X_1} - \bar{X_2}}{s_{X_1 X_2} \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$ 
   \end{quote}
 \end{framed}
 
