@@ -5,13 +5,11 @@ In this chapter, we present the results for various models on three datasets. We
 
 Our evaluation starts with baseline model which is used to determine whether our models' performance is significantly better than selection of the most frequent developer. Next, we validate the presumption that stop-words removal is advantageous for all our models and in the next section, we finally compare our models. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by a private company. The second to last section contains comparison of the datasets in terms of performance. In our last section, we show how the performance changes for different number of top recommendations.
 
+We visualize a lot of the results with plots in this chapter. Because there is a lot of them and we do not want to overwhelm the user with unnecessary information, we chose to place some of them in appendix~\ref{appendix:extra-plots}.
+
 \section{Process Overview}
 
-Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}.
-
-The process begins by retrieving a dataset from a bug tracking system. It then proceeds by filtering unwanted bug reports (unassigned for example), randomly shuffling the data (to get more accurate results) and finally splitting it into a cross-validation set (30\%) and a training set (70\%). Both sets are then separately subjected to application of feature extraction methods.
-
-The training dataset is used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics (accuracy, precision and recall...) and for analysis.
+Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}. The process begins by retrieving a dataset from a bug tracking system. It then proceeds by filtering unwanted bug reports (unassigned for example), randomly shuffling the data (to get more accurate results) and finally splitting it into a cross-validation set (30\%) and a training set (70\%). Both sets are then separately subjected to application of feature extraction methods. The training dataset is used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics and for analysis.
 
 \begin{landscape}
 \begin{figure}[htbp]
@@ -159,7 +157,7 @@ All our Firefox bug reports were created within 62 months. You can see the distr
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/topic_component_distribution/firefox_topic_10.pdf}
-    \caption{Time-Window Analysis of Firefox Data by Topics}
+    \caption{Topic Analysis of Firefox Data}
     \label{fig:distribution.firefox.topic}
 \end{figure}
 
@@ -170,7 +168,7 @@ The proprietary bug reports were created within 36 months. You can see the distr
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/topic_component_distribution/proprietary_topic_10.pdf}
-    \caption{Time-Window Analysis of Proprietary Data by Topics}
+    \caption{Topic Analysis of Proprietary Data}
     \label{fig:distribution.prop.topic}
 \end{figure}
 
