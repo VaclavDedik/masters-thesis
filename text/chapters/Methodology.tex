@@ -1,13 +1,13 @@
 \chapter{Methodology}
 \label{chapter:methodology}
 
-This chapter describes the methodology of the evaluation as well as its application. Running empirical research poses some issues in terms of definition of the hypotheses, replicability of the results and their reporting---among other factors. To ease the formulation of the goals of the current thesis and to drive the reporting of the results, we decided to use the framework proposed by Victor Basili of the University of Maryland, College Park and the Software Engineering Laboratory at the NASA Goddard Space Flight Center called \textit{Goal Question Metric} (or just GQM)~\cite{basili1992software}.
+This chapter describes the methodology of the evaluation as well as its application. Running empirical research poses some issues in terms of definition of the hypotheses, replicability of the results and their reporting---among other factors. To ease the formulation of the goals of the current thesis and to drive the reporting of the results, we decided to use the framework proposed by Victor Basili of the University of Maryland called \textit{Goal Question Metric} (GQM)~\cite{basili1992software}.
 
 \section{The Goal Question Metric Approach}
 
 The focus of the GQM approach is to define a good measurement mechanism mainly for engineering disciplines like software engineering, computer science and others~\cite{basili1992software}. Application of this approach helps support project planning, determine pros and cons of the current project and process, provide an intuition about the impact of modifying or refining a technique as well as assess current progress and last but not least to write the final work in a comprehensible and structured way~\cite{basili1992software}.
 
-The first prominent step in terms of GQM is to define a set of goals. Goals are entities that are to be assessed and therefore must be defined in a way that allows their assessment. Second step is to define a set of questions, these characterize the way the assessment of a goal is going to be carried out. The last step at the very bottom is to define metrics that are used to answer the questions in a quantitative way. the usual workflow is to define goals and then refine each into several separate questions. The questions are then further refined into metrics where more than one question can have the same metric in common~\cite{basili1992software}.
+The first prominent step in terms of GQM is to define a set of goals. Goals are entities that are to be assessed and therefore must be defined in a way that allows their assessment. Second step is to define a set of questions, these characterize the way the assessment of a goal is going to be carried out. The last step at the very bottom is to define metrics that are used to answer the questions in a quantitative way. Metrics can be objective or subjective (time for development vs experience of the developers). The usual workflow is to define goals and then refine each into several separate questions. The questions are then further refined into metrics where more than one question can have the same metric in common~\cite{basili1992software}.
 
 \section{Application of GQM}
 
@@ -15,7 +15,7 @@ In this section, we apply the GQM methodology to our project. We proceed from to
 
 \subsection{Goals}
 
-First, we define goals. In our case, there is only one general goal that looks like this:
+First, we define goals. In our case, there is only one general goal:
 
 \begin{framed}
   \hypertarget{goal:1}{Goal 1:}
@@ -26,7 +26,7 @@ First, we define goals. In our case, there is only one general goal that looks l
 
 \subsection{Questions}
 
-Next, we need to refine questions for our single goal. We define seven questions, each one addressing a different concern of our research.
+Next, we need to refine questions for our single goal. We define seven questions, each one addressing a different concern of our empirical study.
 
 \begin{framed}
   \hypertarget{question:1}{Question 1:}
@@ -46,7 +46,7 @@ Next, we need to refine questions for our single goal. We define seven questions
 
   \hypertarget{question:4}{Question 4:}
   \begin{quote}
-    Does the model with the same parameters work with all projects (a projects is a dataset of bug reports)?
+    Does the model with the same parameters work with all projects/datasets?
   \end{quote}
 
   \hypertarget{question:5}{Question 5:}
@@ -68,7 +68,7 @@ Next, we need to refine questions for our single goal. We define seven questions
 
 \subsection{Metrics}
 
-The last step is to define metrics used to answer questions above. We use five metrics:
+The last step is to define metrics used to answer questions above. We use eight metrics:
 
 \begin{framed}
   \hypertarget{metric:a}{Accuracy:}
@@ -85,25 +85,27 @@ The last step is to define metrics used to answer questions above. We use five m
 
   \hypertarget{metric:r}{Macro-Averaged Recall:}
   \begin{quote}
-    The amount of assignees correctly predicted as positive for given test sample over number of assignees correctly predicted as positive or incorrectly predicted as negative, averaged over all classes~\cite{Asch2013}, formally:
-    $$Recall_{macro} = \frac{1}{q}\sum_{\lambda=1}^q\frac{tp_{\lambda}}{tp_{\lambda}+fn_{\lambda}}$$ 
+    The amount of assignees correctly predicted as positive for given test sample over number of assignees correctly predicted as positive or incorrectly predicted as negative, averaged over all classes~\cite{Asch2013}, formally written as:
+    $$Recall_{macro} = \frac{1}{q}\sum_{\lambda=1}^q\frac{tp_{\lambda}}{tp_{\lambda}+fn_{\lambda}}$$
   \end{quote}
 
   \hypertarget{metric:da}{Delta Accuracy:}
   \begin{quote}
-    The difference between the accuracy of two models trained and tested on two different datasets:
+    The difference between the accuracy of the same model trained and tested on two different datasets:
     $$\Delta Accuracy = |Accuracy^{(X_1)} - Accuracy^{(X_2)}|$$
+
+    Where $X_1$ represents one project/dataset, $X_2$ represents another, e.g. $X_1$ could represent Firefox and $X_2$ could represent Netbeans.
   \end{quote}
 
   \hypertarget{metric:dp}{Delta Macro-Averaged Precision:}
   \begin{quote}
-    The difference between the macro-averaged precision of two models trained and tested on two different datasets:
+    The difference between the macro-averaged precision of the same model trained and tested on two different datasets:
     $$\Delta Precision_{macro} = |Precision_{macro}^{(X_1)} - Precision_{macro}^{(X_2)}|$$
   \end{quote}
 
   \hypertarget{metric:dr}{Delta Macro-Averaged Recall:}
   \begin{quote}
-    The difference between the macro-averaged recall of two models trained and tested on two different datasets:
+    The difference between the macro-averaged recall of the same model trained and tested on two different datasets:
     $$\Delta Recall_{macro} = |Recall_{macro}^{(X_1)} - Recall_{macro}^{(X_2)}|$$
   \end{quote}
 
@@ -115,13 +117,13 @@ The last step is to define metrics used to answer questions above. We use five m
 
   \hypertarget{metric:tt}{T-Test:}
   \begin{quote}
-    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. There are two t-tests we use, the independent two-sample t-test for unequal variances, also called Welch's t-test, and the independent two-sample t-test for equal variances. For each dataset, we therefore have to first determine whether the datasets have the same sample variance, which we determine by the Levene's test. 
+    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. There are two t-tests we use, the independent two-sample t-test for unequal variances, also called Welch's t-test, and the independent two-sample t-test for equal variances. For each dataset, we therefore have to first determine whether the datasets have the same sample variance, which we determine by the Levene's test.
 
     Both t-tests are performed by first calculating the t-test statistic and looking up a corresponding value in the t-test table. The statistic for the Welch's t-test can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
     $$t = \frac{\bar{X_1} - \bar{X_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
 
     The statistic for the independent two-sample t-test for equal variances is calculated like this ($s_{X_1 X_2}$ is the pooled standard deviation):
-    $$t = \frac{\bar{X_1} - \bar{X_2}}{s_{X_1 X_2} \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$ 
+    $$t = \frac{\bar{X_1} - \bar{X_2}}{s_{X_1 X_2} \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
   \end{quote}
 \end{framed}
 
@@ -183,3 +185,7 @@ The last step is to define metrics used to answer questions above. We use five m
   \end{scope}
 \end{tikzpicture}
 \end{landscape}
+
+You can see on the overview graph above the structure of our GQM approach. While the relationship between the single goal and the questions is simple, the relationship between the questions and the metrics is a lot more complicated. Even though some questions can be answered with a single metric (Q2, Q7), the answers to several other questions are based on as much as five metrics (Q4, Q5). This is a good indication of the complexity of each question. On the other hand some of the used metrics (in the context of Q1, Q4, Q5 and Q6) can be grouped into one general group (e.g. performance and difference in performance).
+
+In this chapter, we established the methodology that will be used to drive the core of our thesis---evaluation and analysis in the next chapter. We established our main goal,  seven questions that needs to be answered and eight metrics that will be used to answer them.
