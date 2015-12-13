@@ -1,7 +1,7 @@
 \chapter{Background}
 \label{chapter:background}
 
-Our thesis could not exist without some fundamentals that were developed by researches long time before. In this chapter, we dive into these fundamentals to get a better intuition about their theory and inner workings. First, we discuss several basic principals in Machine Learning and Text Classification including supervised vs unsupervised learning, regression vs classification and binary-class vs multi-class classification. Next, we describe some ML models like Support Vector Machine and Naive Bayes. In the last section, we detail several ML Feature Extraction methods.
+Our thesis relies on several fundamentals (ML, NLP, text classification etc.) that were established in the past. In this chapter, we dive into these fundamentals to get a better intuition about their theory and inner workings. First, we discuss several basic principals in Machine Learning and Text Classification including supervised vs unsupervised learning, regression vs classification and binary-class vs multi-class classification. Next, we describe some ML models like Support Vector Machine and Naive Bayes. In the last section, we detail several ML Feature Extraction methods.
 
 \section{Machine Learning and Text Classification}
 
@@ -53,7 +53,7 @@ After studying related work (see \autoref{chapter:related-work}), we consider th
 
 The first supervised classification model we introduce is the Naive Bayes. It is probably the most intuitive way of doing text classification as it relies on probability to predict the most likely class for a document~\cite{manning2008introduction}. The idea is quite simple, compute the conditional probability $P$ that document $d$ belongs to class $c$. Formally (from~\cite{manning2008introduction}):
 
-$$P(c|d) \propto P(c) \prod_{1 \leq k \leq n_d} P(t_k|c)$$ 
+$$P(c|d) \propto P(c) \prod_{1 \leq k \leq n_d} P(t_k|c)$$
 
 $P(c)$ is the probability of a document belonging to class $c$. $P(t_k|c)$ is the conditional probability that term $t_k$ occurs in a document that belongs to class $c$ and $n_d$ is number of documents. This formula is based on Bayes' theorem, it, however, ignores the denominator of the full equation as it is not needed for finding the most probable class~\cite{hand2001bayes}. Another important note is that the formula above assumes the $P(t_k|c)$ probabilities are independent (i.e. the occurrence of term $t_k$ does not decrease or increase the probability of occurrence of term $t_l$). In practice, it is unlikely that all terms are independent, if there is the term \textit{Machine} in a document, it probably slightly increases the probability that there is also the term \textit{Learning}. This naive assumption (called strong independence relation assumption) is the reason for the name of the classification model~\cite{hand2001bayes}.
 
@@ -109,7 +109,7 @@ The general way SVMs operate is straightforward. Instead of trying to find a fun
 
 You can probably spot a problem in this mathematical model. The positive and negative samples can be mixed up together so much that there simply is not a room for an applicable decision boundary. This is why the strictness of the optimization algorithm can be relaxed by tuning the regularization parameter $C$~\cite{manning2008introduction}. Setting this parameter to a higher value allows the optimization algorithm to ignore some positive or negative examples (called \textit{outliers}) on the wrong side of the decision hyperplane~\cite{manning2008introduction}.
 
-We will now proceed to have a look at non-linear classification with SVMs. In many applications, linear classification is not enough to warrant a good decision boundary and therefore performance. For this reason, we define non-linear classification that can deal with data that follow a more complicated structure. Using kernel functions, we can effectively transform the decision boundary into polynomial, Gaussian or sigmoid function. Due to using technique called \textit{kernel trick}, this can be done without increasing the time complexity of the learning algorithm~\cite{manning2008introduction}.
+We will now proceed to have a look at non-linear classification with SVMs. In many applications, linear classification is not enough to warrant a good decision boundary and therefore performance. For this reason, we define non-linear classification that can deal with data that follow a more complicated structure. Using kernel functions, we can effectively transform the decision boundary into polynomial, Gaussian or sigmoid function. By using technique called \textit{kernel trick}, this can be done without increasing the time complexity of the learning algorithm~\cite{manning2008introduction}.
 
 \section{Feature Extraction Methods}
 
@@ -117,7 +117,7 @@ We now proceed to examine several feature extraction methods. These methods can 
 
 \subsection{Stop-Words Removal}
 
-Stop-words removal is a feature extraction method that removes unnecessary words. These words are usually downloaded from a corpus as a stop-word list. A stop-word is a word that contain little meaning (a, the, and, at etc.)~\cite{scott1999feature}. This technique is very simple and increases the performance significantly, it is therefore almost always used in conjunction with other feature extraction methods~\cite{scott1999feature}. 
+Stop-words removal is a feature extraction method that removes unnecessary words. These words are usually downloaded from a corpus as a stop-word list. A stop-word is a word that contain little meaning (a, the, and, at etc.)~\cite{scott1999feature}. This technique is very simple and increases the performance significantly, it is therefore almost always used in conjunction with other feature extraction methods~\cite{scott1999feature}.
 
 \subsection{Term Frequency--Inverse Document Frequency}
 
@@ -159,3 +159,5 @@ In statistics, the Chi-square test is used to examine independence of two events
 $$\chi^2 = \sum_{i=1}^m \sum_{j=1}^k \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
 
 Where $m$ is the number of intervals that are used for \textit{discretization} of features, $k$ is number of classes, $O_{ij}$ is the observed number of samples in the $i$th interval and $j$th class and $E_{ij}$ is the expected number of samples in the $i$th interval and $j$th class.
+
+In this chapter, we discussed the background of our work beginning with ML fundamentals and later discussing SVM, NB and CART models and several feature extraction techniques. In the next chapter, we establish the methodology we use in the core of our thesis.
