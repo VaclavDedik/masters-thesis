@@ -1,15 +1,29 @@
 \chapter{Evaluation and Analysis}
 \label{chapter:evaluation}
 
-In this chapter, we present the results for various models on three datasets. We begin with process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine if the different datasets are similar. We continue our analysis with window size analysis and its effect on performance and we conclude the analysis of the datasets with the study of topic distribution where we look at its change over time. 
+In this chapter, we present the results for various models on three datasets---a proprietary dataset provided by a Czech-based company and two open-source dataset.
+
+We begin the chapter with a process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine if the different datasets are similar. We continue our analysis with window size analysis and its effect on performance and we conclude the analysis of the datasets with the study of topic distribution where we look at its change over time.
 
 Our evaluation starts with baseline model which is used to determine whether our models' performance is significantly better than selection of the most frequent developer. Next, we validate the presumption that stop-words removal is advantageous for all our models and in the next section, we finally compare our models. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by a private company. The second to last section contains comparison of the datasets in terms of performance. In our last section, we show how the performance changes for different number of top recommendations.
 
-We visualize a lot of the results with plots in this chapter. Because there is a lot of them and we do not want to overwhelm the reader with unnecessary information, we chose to place some of them in appendix~\ref{appendix:extra-plots}.
+We visualize a lot of the results with plots in this chapter. Because there is a lot of them and we do not want to overwhelm the reader with unnecessary information, we chose to place some of them in appendix~\ref{appendix:extra-plots}. We also decided not to discuss them as the discussion about the plots we placed in this chapter seems sufficient.
+
+The evaluation and analysis is performed in order to find the best possible ML model for practical application of automatic ticket triage. As a part of this theses, we developed a web application that uses our model to predict assignees based on a provided summary and description of a bug report. The link to the repository of the source code can be found in appendix~\ref{appendix:links}.
 
 \section{Process Overview}
 
-Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}. The process begins by retrieving a dataset from a bug tracking system. It then proceeds by filtering unwanted bug reports (unassigned for example), randomly shuffling the data (to get more accurate results) and finally splitting it into a cross-validation set (30\%) and a training set (70\%). Both sets are then separately subjected to application of feature extraction methods. The training dataset is used for training the machine learning model and the cross-validation dataset is fed into the classifier to calculate prediction results. The results can be used for computation of metrics and for analysis.
+Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}.
+
+The process begins by retrieving a dataset from a bug tracking system. The next step is to filter unwanted bug reports from the dataset. All tickets that are unassigned, not fixed or not resolved are removed. There are also sometimes bug reports that are assigned to a universal computer-generated user (e.g. \texttt{nobody@mozilla.org}), we remove these reports as well. Bug reports that are resolved by developers that have not fixed sufficient amount of reports in the past (e.g. 30) are also removed. This allows the ML model to be less complicated while sacrificing only a little accuracy.
+
+Another step is to shuffle the bug reports randomly. This is done solely to achieve more accurate performance results with the cross-validation (CV) set, because using newest date for the CV set while training the model on older data is unfair. In practice, only a few new developers are usually used for prediction before they are placed in the training dataset and the model is retrained.
+
+After the steps above, the process continues by splitting the resulting dataset into two sets---a cross-validation set and a training set. The CV set contains 30\% of the bugs while the training set contains the rest (70\%). There are other cross-validation methods (e.g. n-fold cross-validation), we opted for this one because we shuffle the data before we do the split so it is impossible to get biased model.
+
+The second stage is to train a machine learning model. First, however, it is necessary to run the training dataset through a feature extraction step. This step applies techniqes that improve the performance of a machine learning model, e.g. stop-words removal, TF--IDF etc. The next step in this stage is to train a machine learning model (e.g. SVM, NB, CART).
+
+The last stage uses the trained machine learning model to generate prediction results that can be used, for example, to compute various perfomance metrics. The first step is to (again) apply feature extraction techniques on the CV dataset and then use the trained classifier to predict results.
 
 \begin{landscape}
 \begin{figure}[htbp]
@@ -23,11 +37,13 @@ Before we dive into the analysis, we provide a flow chart that summarizes the pr
 \section{Datasets}
 \label{section:datasets}
 
-To evaluate performance of a model of ours, a set of a bug tracking data is necessary. We provide description of the three datasets that we chose for the evaluation of the models in this section. We also do a basic analysis of the datasets which will allow us to establish some basic answers to questions \hyperlink{question:4}{4} and \hyperlink{question:5}{5}.
+To evaluate the performance of a model, we need a set of bug tracking data. One dataset was provided by a private company, but as we eventually want to compare our results with related work, we selected two other open-source projects that are frequently used for training and testing of ML models in related work---Netbeans and Firefox.
+
+In this section, we provide description of these three datasets. We also do a basic analysis of the datasets which will allow us to establish some basic answers to GQM questions \hyperlink{question:4}{4} and \hyperlink{question:5}{5}.
 
 \subsection{Firefox Data}
 
-This dataset is downloaded from Mozilla repository\footnote{https://bugzilla.mozilla.org} from project Firefox. We downloaded all bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED} and were created in year 2010 or later. We also removed bugs with field \texttt{assigned\_to} set to \texttt{nobody@mozilla.org} as those tickets were resolved and fixed but not assigned. This yields $9,141$ bugs in total. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on figure~\ref{fig:datasets.firefox.dist}.
+This dataset is downloaded from Mozilla repository\footnote{https://bugzilla.mozilla.org} from project Firefox. We downloaded all bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED} and were created in year 2010 or later. We also removed bugs with field \texttt{assigned\_to} set to \texttt{nobody@mozilla.org} as those tickets were resolved and fixed but not assigned to an actual developer. This yields $9,141$ bugs in total. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on figure~\ref{fig:datasets.firefox.dist}.
 
 \begin{figure}[htbp]
     \centering
@@ -38,7 +54,7 @@ This dataset is downloaded from Mozilla repository\footnote{https://bugzilla.moz
 
 \subsection{Netbeans Data}
 
-Netbeans data were downloaded from Netbeans bug repository\footnote{https://netbeans.org/bugzilla/}. We considered latest $3,000$ bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED}. We removed bugs with assignee \texttt{kenai\_tester\_git} as those were created automatically resulting in $2,924$ bug reports. These bugs were created between 2014-06-14 and 2015-06-14 and they contain $92$ developers. After removing developers who did not fix at least 30 bugs, the dataset contains $2,528$ reports with $30$ developers. Figure~\ref{fig:datasets.netbeans.dist} is a histogram and distribution of this datasets.
+Netbeans data were downloaded from Netbeans bug repository\footnote{https://netbeans.org/bugzilla/}. We considered latest $3,000$ bugs that are in status \texttt{RESOLVED} with resolution \texttt{FIXED}. We removed bugs with assignee \texttt{kenai\_tester\_git} (as those were created automatically) resulting in $2,924$ bug reports. These bugs were created between 2014-06-14 and 2015-06-14 and they contain $92$ developers. After removing developers who did not fix at least 30 bugs, the dataset contains $2,528$ reports with $30$ developers. Figure~\ref{fig:datasets.netbeans.dist} is a histogram and distribution of this datasets.
 
 \begin{figure}[htbp]
     \centering
@@ -58,44 +74,44 @@ The Proprietary dataset was provided by a company that wants to remain anonymous
     \label{fig:datasets.proprietary.dist}
 \end{figure}
 
-\subsection{Chi-Squared Test}
+\subsection{Chi-Square Test}
 
-In this section, we test the null hypothesis that two samples are from the same distribution. For this, we use the two-sided alternative of two-sample Chi-Squared test. We split the samples from each datasets into five bins and compute the \textit{p-value} for three pairs of samples (Netbeans and Firefox, Firefox and Proprietary, Proprietary and Netbeans).
+In this section, we test the null hypothesis that two samples are from the same distribution, which will allow us to determine how similar the used datasets are. For this, we use the two-sided alternative of two-sample Chi-Square test. We split the samples from each datasets into five bins and compute the \textit{p-value} for three pairs of samples.
 
-The Chi-Squared test with Netbeans and Firefox samples yields p-value of $0.4283$, as p-value~$> 0.05$ we fail to reject the null hypothesis that the two samples are from the same distribution with 5\% level of significance.
+The Chi-Square test with Netbeans and Firefox samples yields p-value of $0.4283$, as p-value~$> 0.05$ we fail to reject the null hypothesis that the two samples are from the same distribution with 5\% level of significance.
 
-The test with Firefox and Proprietary samples returns p-value equal to $0.8648$ so we again fail to reject the null hypothesis with 5\% level of significance. The last test with samples from Proprietary and Netbeans data results in p-value of $0.6182$, which again means the null hypothesis cannot be rejected with 5\% significance level.
+The test with Firefox and Proprietary samples returns p-value equal to $0.8648$ so we again fail to reject the null hypothesis. The last test with samples from Proprietary and Netbeans data results in p-value of $0.6182$, which again means the null hypothesis cannot be rejected (with 5\% significance).
 
 \subsection{T-Test}
 
-In the previous section, we tested the hypothesis that the datasets used in this thesis are from the same distribution. We failed to reject the hypothesis with all samples, in this section, we test the null hypothesis that the samples have the same population mean. For that, we have to test the hypothesis that the variance of the samples are the same.
+In the previous section, we tested the hypothesis that the datasets used in this thesis are from the same distribution. We failed to reject the hypothesis with all samples, in this section, we test the null hypothesis that the samples have the same population mean---allowing us to futher learn how statistically similar the datasets are. For that, we have to test the hypothesis that the variances of the samples are the same.
 
-We use the two-sided alternative of the standard independent two-sample t-test to test the null hypothesis that the samples have the same population mean, and the two-sided alternative of the Levene test to test the null hypothesis that the samples have equal population variance. If we reject the null hypothesis of the Levene test, we use the two-sided alternative of the Welch's t-test instead of the standard t-test.
+We use the two-sided alternative of the standard independent two-sample t-test to test the null hypothesis that the samples have the same population mean, and the two-sided alternative of the Levene test to test whether the samples have equal population variance. If we reject the null hypothesis of the Levene test, we use the two-sided alternative of the Welch's t-test instead of the standard variant.
 
 First, we test the samples from Firefox and Proprietary datasets. The Levene test yields p-value equal to $0.2730$, as p-value~$> 0.05$, we fail to reject the null hypothesis with 5\% significance level. To test the population mean of the two samples, we therefore have to use the standard independent t-test. The standard independent t-test results in p-value of $0.1954$, which means we fail to reject the null hypothesis of equal population mean of the two samples with 5\% significance.
 
-Second, we test the samples from Firefox and Netbeans repositories. As the Levene tests returns p-value equal to $0.4397$, which is greater than the $\alpha$ of $0.05$, we fail to reject the null hypothesis of equal population variances with 5\% level of significance. Next, we use the standard independent t-test to test the population means. The p-value of this t-test on these two samples is equal to $0.5924$, which means we fail to reject the null hypothesis of equal population means with 5\% significance.
+Second, we test the samples from Firefox and Netbeans repositories. As the Levene test returns p-value equal to $0.4397 > 0.05$, we fail to reject the null hypothesis of equal population variances (5\% significance). The p-value of the standard independent t-test on these two samples is equal to $0.5924$, which means we fail to reject the null hypothesis of equal population means with 5\% significance.
 
-Last samples we test are from Netbeans and Proprietary datasets. The p-value of the Levene test for these two samples is $0.6007$ thus we fail to reject the null hypothesis of equal variances. The p-value of the standard independent t-test is equal to $0.3061$, which again means we can reject the null hypothesis that the two samples have the same population mean with 5\% significance.
+Last samples we test are from Netbeans and Proprietary datasets. The p-value of the Levene test for these two samples is $0.6007$ thus we fail to reject the null hypothesis of equal variances. The p-value of the standard independent t-test is equal to $0.3061$, which again means we have to reject the null hypothesis that the two samples have the same population mean (5\% significance).
 
 \subsection{Conclusion}
 
-Our basic analysis of the datasets allows us to partially answer two questions established in chapter~\ref{chapter:methodology}. The similarity in the distributions and means of the datasets seem to suggest that the models we establish later in this chapter should work on all datasets without tuning the parameters (\hyperlink{question:4}{Q4}). The results of our chi-square test and t-test imply there is not much difference between proprietary and open-source data, partially answering~\hyperlink{question:5}{Q5}. Our confidence in these answers will be further refined when we evaluate our models and datasets later in this chapter.
+Our basic analysis of the datasets allows us to partially answer two questions established in chapter~\ref{chapter:methodology}. The similarity in the distributions and means of the datasets suggests that our models will work on all datasets regardless of parameter values (\hyperlink{question:4}{Q4}). The results of our chi-square test and t-test imply there is little difference between proprietary and open-source data, partially answering~\hyperlink{question:5}{Q5}. Our confidence in these answers will be further refined when we evaluate our models and datasets.
 
 \section{Window Size}
 \label{section:window-size}
 
 The size of the time window is an important question that needs to be addressed when dealing with machine learning. A naive approach uses all samples from a dataset to train the classifier, but a more advanced approach considers what effect does the size of the window have on the data and how it can improve the performance. In this section, we try to address this concern by evaluating the performance of the classifier for different sizes of the window (addressing~\hyperlink{question:6}{Q6}).
 
-To determine weather a different size of the window helps the performance is a difficult endeavour, we attempt it by employing three different approaches, each approach can be described by two properties like this:
+To determine weather a different size of the window helps the performance is a difficult endeavour, we attempt it by employing three different approaches, each approach can be described by two properties:
 
 \begin{enumerate}
- \item Fixed number of bugs in each period, variable size of the train set
- \item Variable number of bugs in each period, fixed size of the train set
- \item Variable number of bugs in each period, variable size of the train set
+ \item Fixed number of bugs per period, variable size of the train set
+ \item Variable number of bugs per period, fixed size of the train set
+ \item Variable number of bugs per period, variable size of the train set
 \end{enumerate}
 
-The Firefox dataset is used for testing of all approaches. The model that is used is Support Vector Machine with Stop-Words removed and TF-IDF weighing.
+The Firefox dataset is used for testing of all approaches. The model that is applied is Support Vector Machine with TF--IDF weighing---the reason for this choice will be clear in the evaluation part of this chapter, the choice is not really important for the analysis.
 
 \subsection{First Approach}
 
@@ -146,13 +162,13 @@ Even after the application of all three approaches, it is hard to draw a concret
 
 \section{Topic Analysis}
 
-In this section, we analyze the distribution of topics with respect to time for proprietary and Firefox datasets. We model 10 topics using Latent Dirichlet Allocation in our approach.
+In this section, we analyze the distribution of topics with respect to time for proprietary and Firefox datasets in order to further determine the differences or similarities of open-source and proprietary datasets. We model 10 topics using Latent Dirichlet Allocation (LDA) in our approach.
 
 The plots show the prevalence of topics each month where a different shade of gray represents a different topic. In terms of our GQM methodology, this section contributes to the answer of questions~\hyperlink{question:4}{4} and~\hyperlink{question:5}{5} (described in chapter~\ref{chapter:methodology}).
 
 \subsection{Firefox Data}
 
-All our Firefox bug reports were created within 62 months. You can see the distribution on figure~\ref{fig:distribution.firefox.topic}. The plot shows that the distribution of topics is quite significantly different each month with two dominant topics. The distribution of the topics seems to oscillate periodically which could be an indication of a release cycle of major Firefox versions, which would not be surprising as many projects have a predetermined periodic release cycle. 
+All our Firefox bug reports were created within 62 months. You can see the distribution on figure~\ref{fig:distribution.firefox.topic}. The plot shows that the distribution of topics is quite significantly different each month with two dominant topics. The distribution of the topics seems to oscillate periodically which could be an indication of a release cycle of major Firefox versions, which would not be surprising as many projects have a predetermined periodic release cycle.
 
 \begin{figure}[htbp]
     \centering
@@ -181,7 +197,7 @@ The topic analysis presented in this section does suggest some difference in top
 
 In this section, we establish a baseline for our models (addressing~\hyperlink{question:1}{Q1}). Our baseline is very simple, the number of bug report that is assigned to each developer is counted and the developer with the highest number of assigned bugs is selected as a prediction for each subsequent call of the \texttt{predict} function.
 
-Figure~\ref{fig:models.firefox.stopwords} shows the performance of the baseline model on Firefox data. While the accuracy of this model is relatively high (18\%), the precision and recall values are much lower (1\% and 5\%), which can be explained by the way macro-averaged metrics work, see metrics in chapter~\ref{chapter:methodology}. 
+Figure~\ref{fig:models.firefox.stopwords} shows the performance of the baseline model on Firefox data. While the accuracy of this model is relatively high (18\%), the precision and recall values are much lower (1\% and 5\%), which can be explained by the way macro-averaged metrics work, see metrics in chapter~\ref{chapter:methodology}.
 
 \section{Stop-Words Removal}
 
