@@ -127,9 +127,7 @@ The last step is to define metrics used to answer questions above. We use eight 
   \end{quote}
 \end{framed}
 
-\begin{landscape}
-\subsection{Overview}
-
+\begin{sidewaysfigure}
 \begin{tikzpicture}
   [auto,every node/.style={rectangle, draw, text centered, text width=2cm,minimum height=1.5cm },node distance=6cm]
 \tikzset{
@@ -184,8 +182,13 @@ The last step is to define metrics used to answer questions above. We use eight 
     \draw (Q7.south) -- (a.north);
   \end{scope}
 \end{tikzpicture}
-\end{landscape}
+\caption{Structure of Our GQM Approach}
+\label{fig:gqm.structure}
+\end{sidewaysfigure}
+\clearpage
 
-You can see on the overview graph above the structure of our GQM approach. While the relationship between the single goal and the questions is simple, the relationship between the questions and the metrics is a lot more complicated. Even though some questions can be answered with a single metric (Q2, Q7), the answers to several other questions are based on as much as five metrics (Q4, Q5). This is a good indication of the complexity of each question. On the other hand some of the used metrics (in the context of Q1, Q4, Q5 and Q6) can be grouped into one general group (e.g. performance and difference in performance).
+\subsection{Overview}
+
+You can see on Figure~\ref{fig:gqm.structure} the structure of our GQM approach. While the relationship between the single goal and the questions is simple, the relationship between the questions and the metrics is a lot more complicated. Even though some questions can be answered with a single metric (Q2, Q7), the answers to several other questions are based on as much as five metrics (Q4, Q5). This is a good indication of the complexity of each question. On the other hand some of the used metrics (in the context of Q1, Q4, Q5 and Q6) can be grouped into one general group (e.g. performance and difference in performance).
 
 In this chapter, we established the methodology that will be used to drive the core of our thesis---evaluation and analysis in the next chapter. We established our main goal, seven questions that needs to be answered and eight metrics that will be used to answer them.
