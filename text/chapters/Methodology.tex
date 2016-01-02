@@ -117,7 +117,7 @@ The last step is to define metrics used to answer questions above. We use eight 
 
   \hypertarget{metric:tt}{T-Test:}
   \begin{quote}
-    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. There are two t-tests we use, the independent two-sample t-test for unequal variances, also called Welch's t-test, and the independent two-sample t-test for equal variances. For each dataset, we therefore have to first determine whether the datasets have the same sample variance, which we determine by the Levene's test.
+    Test to assert whether two samples have the same population mean~\cite{Ruxton01072006}. There are two t-tests we use, the independent two-sample t-test for unequal variances, also called Welch's t-test, and the independent two-sample t-test for equal variances. For each dataset, we therefore have to first determine whether the datasets have the same sample variance, which we determine by the Levene test.
 
     Both t-tests are performed by first calculating the t-test statistic and looking up a corresponding value in the t-test table. The statistic for the Welch's t-test can be calculated like this ($\bar{x}$ is mean, $s^2$ is sample variance and $n$ is number of terms in a set)~\cite{Ruxton01072006}:
     $$t = \frac{\bar{X_1} - \bar{X_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
@@ -182,7 +182,7 @@ The last step is to define metrics used to answer questions above. We use eight 
     \draw (Q7.south) -- (a.north);
   \end{scope}
 \end{tikzpicture}
-\caption{Structure of Our GQM Approach}
+\caption{Structure of our GQM approach.}
 \label{fig:gqm.structure}
 \end{sidewaysfigure}
 \clearpage

@@ -21,14 +21,14 @@ Another step is to shuffle the bug reports randomly. This is done solely to achi
 
 After the steps above, the process continues by splitting the resulting dataset into two sets---a cross-validation set and a training set. The CV set contains 30\% of the bugs while the training set contains the rest (70\%). There are other cross-validation methods (e.g. n-fold cross-validation), we opted for this one because we shuffle the data before we do the split so it is impossible to get biased model.
 
-The second stage is to train a machine learning model. First, however, it is necessary to run the training dataset through a feature extraction step. This step applies techniqes that improve the performance of a machine learning model, e.g. stop-words removal, TF--IDF etc. The next step in this stage is to train a machine learning model (e.g. SVM, NB, CART).
+The second stage is to train a machine learning model. First, however, it is necessary to run the training dataset through a feature extraction step. This step applies techniques that improve the performance of a machine learning model, e.g. stop-words removal, TF--IDF etc. The next step in this stage is to train a machine learning model (e.g. SVM, NB, CART).
 
-The last stage uses the trained machine learning model to generate prediction results that can be used, for example, to compute various perfomance metrics. The first step is to (again) apply feature extraction techniques on the CV dataset and then use the trained classifier to predict results.
+The last stage uses the trained machine learning model to generate prediction results that can be used, for example, to compute various performance metrics. The first step is to (again) apply feature extraction techniques on the CV dataset and then use the trained classifier to predict results.
 
 \begin{sidewaysfigure}
     \centering
         \includegraphics[width=530px, trim=0 5cm 0 0, clip]{./images/flowchart/analysis_flowchart.pdf}
-    \caption{Flowchart of the Evaluation and Analysis Process}
+    \caption{Flowchart of the evaluation and analysis process.}
     \label{fig:model.flowchart}
 \end{sidewaysfigure}
 \clearpage
@@ -123,7 +123,7 @@ The result is visualized on figure~\ref{fig:window.firefox.1a}. You can see that
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/window_size/firefox_1a.pdf}
-    \caption{Performance of the classifier for different size of the window, 1st approach}
+    \caption{Performance of the classifier for different sizes of the window, 1st approach.}
     \label{fig:window.firefox.1a}
 \end{figure}
 
@@ -138,7 +138,7 @@ Figure~\ref{fig:window.firefox.2a} shows the plot of this approach. The performa
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/window_size/firefox_2a.pdf}
-    \caption{Performance of the classifier for different size of the window, 2nd approach}
+    \caption{Performance of the classifier for different sizes of the window, 2nd approach.}
     \label{fig:window.firefox.2a}
 \end{figure}
 
@@ -151,7 +151,7 @@ The advantage is that this approach is closest to reality (no random selection).
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/window_size/firefox_3a.pdf}
-    \caption{Performance of the classifier for different size of the window, 3rd approach}
+    \caption{Performance of the classifier for different sizes of the window, 3rd approach.}
     \label{fig:window.firefox.3a}
 \end{figure}
 
@@ -172,7 +172,7 @@ All our Firefox bug reports were created within 62 months. You can see the distr
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/topic_component_distribution/firefox_topic_10.pdf}
-    \caption{Topic Analysis of Firefox Data}
+    \caption{Topic analysis of Firefox data.}
     \label{fig:distribution.firefox.topic}
 \end{figure}
 
@@ -183,7 +183,7 @@ The proprietary bug reports were created within 36 months. You can see the distr
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/topic_component_distribution/proprietary_topic_10.pdf}
-    \caption{Topic Analysis of Proprietary Data}
+    \caption{Topic analysis of the proprietary data.}
     \label{fig:distribution.prop.topic}
 \end{figure}
 
@@ -205,7 +205,7 @@ Stop-words removal is a technique that can increases performance of the model. I
 \begin{figure}[htbp]
     \centering
         \includegraphics[width=\textwidth]{./images/comparison_of_models/firefox_0.pdf}
-    \caption{Stop-Words removal on Firefox data.}
+    \caption{Stop-words removal on Firefox data.}
     \label{fig:models.firefox.stopwords}
 \end{figure}
 
