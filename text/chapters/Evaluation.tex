@@ -1,13 +1,13 @@
 \chapter{Evaluation and Analysis}
 \label{chapter:evaluation}
 
-In this chapter, we present the results for various models on three datasets---a proprietary dataset provided by a Czech-based company and two open-source dataset.
+In this chapter, we present the results for various models on three datasets---a proprietary dataset provided by a Czech-based company and two open-source datasets (Firefox\footnote{\url{https://www.mozilla.org/firefox/}} and Netbeans\footnote{\url{https://netbeans.org/}}).
 
-We begin the chapter with a process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine if the different datasets are similar.
+We begin the chapter with a process overview where we explain our evaluation flow. In the next section, we provide a description and origin of the used datasets, we also analyze the distribution of our datasets and run two statistical tests to determine how similar the different datasets are.
 
 Our evaluation starts with baseline model which is used to determine whether our models' performance is significantly better than selection of the most frequent developer. Next, we validate the presumption that stop-words removal is advantageous for all our models and in the next section, we finally compare our models. This includes comparison of open source data downloaded from the Internet with the proprietary data provided by a private company. The second to last section contains comparison of the datasets in terms of performance. In our last section, we show how the performance changes for different number of top recommendations.
 
-At the end of the chapter, we continue with the window size analysis and its effect on performance and we conclude the chapter with the study of topic distribution where we look at its change over time.
+At the end of the chapter, we continue our work with the window size analysis (and its effect on performance) and we conclude the chapter with the study of topic distribution where we investigate its change over time.
 
 We visualize a lot of the results with plots in this chapter. Because there is a lot of them and we do not want to overwhelm the reader with unnecessary information, we chose to place some of them in appendix~\ref{appendix:extra-plots}. We also decided not to discuss them as the discussion about the plots we placed in this chapter seems sufficient.
 
@@ -15,7 +15,7 @@ The evaluation and analysis is performed in order to find the best possible ML m
 
 \section{Process Overview}
 
-Before we dive into the analysis, we provide a flow chart that summarizes the process of our analysis and evaluation on figure~\ref{fig:model.flowchart}.
+Before we dive into the analysis, we provide a flow chart that presents the general process of our analysis and evaluation (Figure~\ref{fig:model.flowchart}). In this section, we discuss the process overview in detail in order to reduce the effort necessary to reproduce this work.
 
 The process begins by retrieving a dataset from a bug tracking system. The next step is to filter unwanted bug reports from the dataset. All tickets that are unassigned, not fixed or not resolved are removed. There are also sometimes bug reports that are assigned to a universal computer-generated user (e.g. \texttt{nobody@mozilla.org}), we remove these reports as well. Bug reports that are resolved by developers that have not fixed sufficient amount of reports in the past (e.g. 30) are also removed. This allows the ML model to be less complicated while sacrificing only a little accuracy.
 
@@ -340,3 +340,5 @@ The proprietary bug reports were created within 36 months. You can see the distr
 \subsection{Conclusion}
 
 The topic analysis presented in this section does suggest some difference in topic distribution (with respect to time). It is not surprising as different projects are developed different ways, the application of different software development methodologies (scrum, waterfall, TDD etc) is one of the factors that are likely to affect the results. In terms of~\hyperlink{question:4}{Q4}, these results decrease our confidence that our models work for all datasets equally without the need to tune their parameters. As far as~\hyperlink{question:5}{Q5} is concerned, the difference between the Firefox and proprietary datasets can be explained by different development processes.
+
+In this chapter, we presented the results for our analysis and our evaluation. In the next chapter, we discuss the results in greater detail. We also compare them with the related work and disucuss some possible threats to their validity. 
