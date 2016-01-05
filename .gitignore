@@ -86,3 +86,4 @@ thesis.pdf
 /webapp/data/triager.db
 /webapp/data/model/*
 !/webapp/data/model/.gitkeep
+/text/bureaucracy
