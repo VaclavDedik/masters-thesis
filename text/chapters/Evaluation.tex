@@ -201,7 +201,7 @@ Second plot (Figure \ref{fig:results.datasets.nb_pr}) shows the precision and re
 
 The second model used for comparison of the proprietary dataset with the open-source dataset is Support Vector Machine model with TF--IDF weighing and stop-words removal as this model shows the most promising results.
 
-Figure \ref{fig:results.datasets.svm_accuracy} visualizes accuracy comparison of the model. While the accuracy of the proprietary dataset (53\%) is a bit lower than the accuracy of the open-source dataset (54\%) when minimum issues per developer equals 30 and while the value of this measure is about the same for all different values of issues per developer greater than 10, it begins again significantly higher for the proprietary dataset (42\%) than the open-source dataset (29\%). This difference cannot even partially be explained the same way we explained it in the Naive Bayes case as the accuracy difference eventually clears.
+Figure \ref{fig:results.datasets.svm_accuracy} illustrates accuracy comparison of the model. While the accuracy of the proprietary dataset (53\%) is a bit lower than the accuracy of the open-source dataset (54\%) when minimum issues per developer equals 30 and while the value of this measure is about the same for all different values of issues per developer greater than 10, it begins again significantly higher for the proprietary dataset (42\%) than the open-source dataset (29\%). This difference cannot even partially be explained the same way we explained it in the Naive Bayes case as the accuracy difference eventually clears.
 
 \begin{figure}[htbp]
     \centering
@@ -232,7 +232,7 @@ We look at the performance of the models for higher number of recommendations th
 
 \subsection{Support Vector Machine Model}
 
-For this comparison, we use the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} shows how the accuracy increases with the number of recommendations, which is expected as the more there are recommendations, the higher the chance of a hit is (i.e. the chance that the list of predictions contains the correct value).
+For this comparison, we use the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} illustrates how the accuracy increases with the number of recommendations, which is expected as the more there are recommendations, the higher the chance of a hit is (i.e. the chance that the list of predictions contains the correct value).
 
 \begin{figure}[htbp]
     \centering
@@ -294,7 +294,7 @@ Figure~\ref{fig:window.firefox.2a} shows the plot of this approach. The performa
 
 \subsection{Third Approach}
 
-Finally, in the third approach, we again use the same periods as in the second approach. The difference is that we select all bug reports as train set. The advantage is that this approach is closest to reality (no random selection). The disadvantage is, however, that the results are skewed by a variable number of samples in each period. The last major disadvantage is that the number of classes (developers) increases significantly each time samples from the next period are added. Figure~\ref{fig:window.firefox.3a} shows the plot of this approach.
+Finally, in the third approach, we again use the same periods as in the second approach. The difference is that we select all bug reports as train set. The advantage is that this approach is closest to reality (no random selection). The disadvantage is, however, that the results are skewed by a variable number of samples in each period. The last major disadvantage is that the number of classes (developers) increases significantly each time samples from the next period are added. Figure~\ref{fig:window.firefox.3a} pictures the plot of this approach.
 
 \begin{figure}[htbp]
     \centering
