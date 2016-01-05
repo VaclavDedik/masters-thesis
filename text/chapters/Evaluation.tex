@@ -53,7 +53,7 @@ This dataset is downloaded from Mozilla repository\footnote{\url{https://bugzill
     \label{fig:datasets.firefox.dist}
 \end{figure}
 
-In total, we were able to retrieve $9,141$ bugs. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on figure~\ref{fig:datasets.firefox.dist}.
+In total, we were able to retrieve $9,141$ bugs. To get a better comparison with the other datasets, we only use $3,000$ datasets for training and cross-validation that were created between 2010-01-01 and 2012-07-10. This dataset contains $343$ labels (developers). Finally, we remove developers who did not fix at least $30$ bugs, yielding $1,810$ bugs with $20$ developers. The histogram with frequencies of the developers and cumulative distribution is on Figure~\ref{fig:datasets.firefox.dist}.
 
 \subsection{Netbeans Data}
 
@@ -68,7 +68,7 @@ Netbeans data were downloaded from Netbeans bug repository\footnote{\url{https:/
 
 \subsection{Proprietary Data}
 
-The Proprietary dataset was provided by a company that wants to remain anonymous. The provided dataset contains $2,926$ bug reports created between 2012-11-23 and 2015-10-16. Only bug reports that were resolved with assigned developer were considered. There are $110$ developers in this dataset. Only $2,424$ bugs assigned to $35$ developers were retained after removal of developers with less than $30$ fixed bugs. The histogram and probability distribution is pictured on figure~\ref{fig:datasets.proprietary.dist}.
+The Proprietary dataset was provided by a company that wants to remain anonymous. The provided dataset contains $2,926$ bug reports created between 2012-11-23 and 2015-10-16. Only bug reports that were resolved with assigned developer were considered. There are $110$ developers in this dataset. Only $2,424$ bugs assigned to $35$ developers were retained after removal of developers with less than $30$ fixed bugs. The histogram and probability distribution is pictured on Figure~\ref{fig:datasets.proprietary.dist}.
 
 \begin{figure}[htbp]
     \centering
@@ -131,7 +131,7 @@ In terms of GQM, this section attempts to answer question~\hyperlink{question:2}
 
 \subsection{Firefox Data}
 
-On Figure~\ref{fig:results.models.firefox}, you can see the performance of the chosen models on Firefox data. The SVM model with TF--IDF weighing achieves the best performance with accuracy of 57\%. Its precision and recall also outperforms all the other approaches with values of 51\% and 45\%. The same model with LSI takes second place. The only model other than SVM that approaches SVM with it's performance is CART, especially with TF--IDF weighing.
+On Figure~\ref{fig:results.models.firefox}, you can see the performance of the chosen models on Firefox data. The SVM model with TF--IDF weighing achieves the best performance with accuracy of 57\%. Its precision and recall also outperforms all the other approaches with values of 51\% and 45\%. The same model with LSI takes second place. The only model other than SVM that approaches SVM with its performance is CART, especially with TF--IDF weighing.
 
 \begin{figure}[htbp]
     \centering
@@ -210,7 +210,7 @@ Figure \ref{fig:results.datasets.svm_accuracy} visualizes accuracy comparison of
     \label{fig:results.datasets.svm_accuracy}
 \end{figure}
 
-Precision and recall of the SVM model is pictured on figure \ref{fig:results.datasets.svm_pr}. This plot, once again, confirms the hypothesis that the performance of the proprietary dataset begins much higher than the performance of the open-source dataset. The precision value of the proprietary dataset is eventually higher (59\%) than the precision value of the open-source dataset (54\%), but the difference at the beginning is just too overwhelming to be explained simply by the difference in performance overall (15\% vs mere 3\%). In the recall case, the right-most case (minimum number of issues per development requirement equal to 30) shows the performance of the proprietary dataset slightly lower (47\%) than that of the open-source dataset (50\%), even in this case, however, the performance for minimum number of issues per development equal to 1 is much higher for the proprietary dataset (14\% vs 3\%).
+Precision and recall of the SVM model is pictured on Figure \ref{fig:results.datasets.svm_pr}. This plot, once again, confirms the hypothesis that the performance of the proprietary dataset begins much higher than the performance of the open-source dataset. The precision value of the proprietary dataset is eventually higher (59\%) than the precision value of the open-source dataset (54\%), but the difference at the beginning is just too overwhelming to be explained simply by the difference in performance overall (15\% vs mere 3\%). In the recall case, the right-most case (minimum number of issues per development requirement equal to 30) shows the performance of the proprietary dataset slightly lower (47\%) than that of the open-source dataset (50\%), even in this case, however, the performance for minimum number of issues per development equal to 1 is much higher for the proprietary dataset (14\% vs 3\%).
 
 \begin{figure}[htbp]
     \centering
@@ -221,7 +221,7 @@ Precision and recall of the SVM model is pictured on figure \ref{fig:results.dat
 
 \subsection{Conclusion}
 
-The results presented in this section suggest an interesting outcome. The performance of the proprietary dataset is generally quite similar to that of the open-source dataset at least as far as the accuracy of the SVM model is concerned. The Naive Bayes model seems to favor the proprietary dataset, however. Another interesting conclusion is that the spread between precision and recall is much higher for the proprietary dataset. This possibly implies higher variance of the dataset. The most striking result, however, emerges when the minimum number of issues per developers equals 1.
+The results presented in this section suggest an interesting outcome. The performance of the proprietary dataset is generally quite similar to that of the open-source dataset at least as far as the accuracy of the SVM model is concerned. The Naive Bayes model, however, seems to favor the proprietary dataset. Another interesting conclusion is that the spread between precision and recall is much higher for the proprietary dataset. This possibly implies higher variance of the dataset. The most striking result, however, emerges when the minimum number of issues per developers equals 1.
 
 In terms of GQM defined in chapter~\ref{chapter:methodology}, we are now talking about question~\hyperlink{question:5}{5}. All our results show significant difference in performance for minimum number of issues per developers equal to 1. The much higher performance for the proprietary dataset in this regard can be probably explained by a simple fact---open-source bug repositories are open to anyone. It is logical to assume that a lot of bug reports in an open-source bug repository are fixed by random users that have never fixed bugs in the project, or fixed only a few of them---and only several users are actively maintaining the project. Proprietary projects are rarely open to public and it is therefore very unlikely there are many one-time assignees.
 
@@ -232,7 +232,7 @@ We look at the performance of the models for higher number of recommendations th
 
 \subsection{Support Vector Machine Model}
 
-For this comparison, we use the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} shows how the accuracy increases with the number of recommendations, which is expected as the more there are recommendation, the higher the chance of a hit is.
+For this comparison, we use the SVM model with TF-IDF weighing and stop-words removed. Figure \ref{fig:results.topx.svm_accuracy} shows how the accuracy increases with the number of recommendations, which is expected as the more there are recommendations, the higher the chance of a hit is (i.e. the chance that the list of predictions contains the correct value).
 
 \begin{figure}[htbp]
     \centering
@@ -266,7 +266,7 @@ The Firefox dataset is used for testing of all approaches. The model that is app
 
 In the first approach, we first remove all bugs from the whole dataset that were fixed by developers with less than 20 fixed bugs. Then we split the remaining dataset into 8 bins. First bin contains 1000 randomly selected bug reports from period 1. All subsequent bins (2-8) contain 500 randomly selected reports from periods 2-8. There are 8 periods, first period is about one year long, all the other periods are about half a year long each. All periods combined add up to the time span of the whole dataset and each $n+1$ period contains bugs older than $n$ period. We train the classifier on period 1, then 1-2, 1-3, 1-4, 1-5, 1-6, 1-7 and 1-8. We test each trained classifier on the same cross-validation set of 300 bug reports that are newer than bugs in period 1.
 
-The disadvantage of this approach is that you select fixed number of bugs from each period. In real world, each period can contain different number of bug reports based e.g. on season. Another disadvantage is that you remove developers that do not meet the criteria of 20 bugs fixed based on the whole dataset. If some developers were very active in the past but are no longer very relevant, they will not be removed from a dataset that is constructed from periods in which the developer no longer fulfills the criteria.
+The disadvantage of this approach is that you select fixed number of bugs from each period. In the real world, each period can contain different number of bug reports based, for example, on season. Another disadvantage is that you remove developers that do not meet the criteria of 20 bugs fixed based on the whole dataset. If some developers were very active in the past but are no longer very relevant, they will not be removed from a dataset that is constructed from periods in which the developer no longer fulfills the criteria.
 
 \begin{figure}[htbp]
     \centering
@@ -275,7 +275,7 @@ The disadvantage of this approach is that you select fixed number of bugs from e
     \label{fig:window.firefox.1a}
 \end{figure}
 
-The result is visualized on figure~\ref{fig:window.firefox.1a}. You can see that about the best result is achieved with the size of the window equal to 30 months. Unfortunately, the performance of the classifier for other sizes is very similar and the results are therefore inconclusive.
+The result is visualized on Figure~\ref{fig:window.firefox.1a}. You can see that about the best result is achieved with the size of the window equal to 30 months. Unfortunately, the performance of the classifier for other sizes is very similar and the results are therefore inconclusive.
 
 \subsection{Second Approach}
 
@@ -315,7 +315,7 @@ The plots show the prevalence of topics each month where a different shade of gr
 
 \subsection{Firefox Data}
 
-We begin our topic analysis with the Firefox dataset. All our Firefox bug reports were created within 62 months (about 5 years). You can see the distribution on figure~\ref{fig:distribution.firefox.topic}.
+We begin our topic analysis with the Firefox dataset. All our Firefox bug reports were created within 62 months (about 5 years). You can see the distribution on Figure~\ref{fig:distribution.firefox.topic}.
 
 \begin{figure}[htbp]
     \centering
@@ -328,7 +328,7 @@ The plot shows that the distribution of topics is quite significantly different 
 
 \subsection{Proprietary Data}
 
-The proprietary bug reports were created within 36 months. You can see the distribution on figure~\ref{fig:distribution.prop.topic}. The plot again shows that the distribution of topics in the proprietary datasets is quite different each month, although their dominance changes quite a lot as well. The first few months are dominated by a single topic, but its significance later drops as other topics take over. Contrary to the Firefox distribution, there does not seem to be an indication of a release cycle, instead, each topic seems to be important only for a limited period of time.
+The proprietary bug reports were created within 36 months. You can see the distribution on Figure~\ref{fig:distribution.prop.topic}. The plot again shows that the distribution of topics in the proprietary datasets is quite different each month, although their dominance changes quite a lot as well. The first few months are dominated by a single topic, but its significance later drops as other topics take over. Contrary to the Firefox distribution, there does not seem to be an indication of a release cycle, instead, each topic seems to be important only for a limited period of time.
 
 \begin{figure}[htbp]
     \centering
@@ -341,4 +341,4 @@ The proprietary bug reports were created within 36 months. You can see the distr
 
 The topic analysis presented in this section does suggest some difference in topic distribution (with respect to time). It is not surprising as different projects are developed different ways, the application of different software development methodologies (scrum, waterfall, TDD etc) is one of the factors that are likely to affect the results. In terms of~\hyperlink{question:4}{Q4}, these results decrease our confidence that our models work for all datasets equally without the need to tune their parameters. As far as~\hyperlink{question:5}{Q5} is concerned, the difference between the Firefox and proprietary datasets can be explained by different development processes.
 
-In this chapter, we presented the results for our analysis and our evaluation. In the next chapter, we discuss the results in greater detail. We also compare them with the related work and disucuss some possible threats to their validity. 
+In this chapter, we presented the results for our analysis and our evaluation. In the next chapter, we discuss the results in greater detail. We also compare them with the related work and disucuss some possible threats to their validity.
